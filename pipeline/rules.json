@@ -1,0 +1,49 @@
+{
+  "_comment": "Declarative strategy config (HumbledTrader-style). Edit values here; scanners read this at runtime, no code changes needed.",
+
+  "_scanner_criteria_note": "HumbledTrader's funnel = LOOSE prefilter over a BROAD universe (gap>=3%, price>=$3, top 20) to get enough candidates, then a STRICT 6-filter entry (above prior-day high, prev close>200SMA, gap>=3%, above premarket high, above HOD, RVOL>=2x). We mirror that: loose Scanner A prefilter below, strict conditions in Scanner B.",
+
+  "scanner_a": {
+    "_note": "HumbledTrader gap screener. mode=largecap: gap>=3% & mcap>$10B; mode=smallcap: gap>=10% & mcap<$800M; mode=any: no mcap filter. rvol_min mirrors her Finviz 'relative volume > 1'.",
+    "mode": "largecap",
+    "universe_file": "sp500.txt",
+    "gap_min_pct": 3.0,
+    "gap_min_pct_smallcap": 10.0,
+    "price_min": 1.0,
+    "avg_vol_min": 300000,
+    "rvol_min": 1.0,
+    "market_cap_min_usd": 10000000000,
+    "smallcap_max_usd": 800000000,
+    "top_n": 20
+  },
+
+  "scanner_b": {
+    "tickers": ["AMD", "NVDA", "MU"],
+    "sma_len": 200,
+    "rvol_min": 1.5
+  },
+
+  "scanner_c_crypto": {
+    "_presets": "strict (sma200/don20/regime on) = rare high-quality; loose (sma50/don10/no regime) = frequent, noisier. Default below is balanced.",
+    "sma_len": 100,
+    "don_len": 15,
+    "use_regime": true,
+    "lookback_days": 365,
+    "fwd_days": 10,
+    "min_per_month": 1.0
+  },
+
+  "exit": {
+    "initial_stop_rule": "lod_minus_1pct",
+    "partial_profit_trigger_R": 0.75,
+    "partial_fraction": 0.33,
+    "breakeven_trigger_R": 1.0,
+    "reward_risk_target": 2.0
+  },
+
+  "risk": {
+    "max_risk_per_trade_pct": 1.0,
+    "max_concurrent_positions": 5,
+    "max_position_pct_of_portfolio": 10.0
+  }
+}

@@ -1,0 +1,45 @@
+name: scan
+
+# Runs the scanner pipeline in the cloud (no laptop needed) and publishes the
+# dashboard to GitHub Pages. Times are UTC. ET shown for EDT (summer); in winter
+# (EST) the ET-equivalent shifts one hour earlier — bump the crons by +1h if you
+# want to keep them pinned to ET year-round.
+on:
+  schedule:
+    - cron: '30 12 * * 1-5'        # ~08:30 ET  — morning gap scan (+ Telegram)
+    - cron: '0,30 14-17 * * 1-5'   # ~10:00-13:30 ET — intraday TJL (every 30m)
+    - cron: '0 18 * * 1-5'         # ~14:00 ET  — final intraday tick
+  workflow_dispatch:               # manual "Run workflow" button
+
+permissions:
+  contents: write                  # allow the job to commit the dashboard
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      # Telegram only on the morning scan or a manual run (no intraday spam)
+      TG: ${{ (github.event_name == 'workflow_dispatch' || github.event.schedule == '30 12 * * 1-5') && '--telegram' || '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r pipeline/requirements.txt
+      - name: Run scanners
+        run: |
+          python pipeline/scanner_a.py
+          python pipeline/scanner_b.py
+          python pipeline/scanner_c.py
+      - name: Build & publish dashboard
+        run: python pipeline/build_dashboard.py --public --out index.html $TG
+      - name: Commit dashboard
+        run: |
+          git config user.name  "tv-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "dashboard $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
