@@ -180,6 +180,68 @@ def to_telegram() -> str:
     return "\n".join(lines)
 
 
+# --------------------------------------------------------------------------
+# Telegram alerting with intraday dedup
+# --------------------------------------------------------------------------
+# Premarket → always send the morning briefing. Intraday (regular session) →
+# only alert when a NEW TJL setup appears versus what we already alerted today,
+# so the 30-min cadence doesn't keep repeating the same setups. State is a small
+# JSON committed next to index.html so it survives between cloud runs.
+STATE_PATH = ROOT.parent / "tg_state.json"
+
+
+def _load_state() -> dict:
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_state(state: dict) -> None:
+    try:
+        STATE_PATH.write_text(json.dumps(state, indent=2), encoding="utf-8")
+    except Exception as e:
+        print(f"[telegram] could not write state: {e}")
+
+
+def _tjl_setups() -> list[str]:
+    b = _latest("scanner_b")
+    return sorted(b.get("hits", [])) if b else []
+
+
+def send_alert() -> bool:
+    """Send the Trading Control summary, with intraday dedup.
+
+    Open session: only send when a TJL setup appears that we haven't alerted on
+    yet today (avoids repeating the same setups every 30 min). Any other session
+    (premarket morning briefing, after-hours, manual): always send, and seed the
+    day's TJL baseline so intraday only flags genuinely new ones.
+    Returns True when a message was actually sent.
+    """
+    now = C.et_now()
+    sess, _ = _session(now)
+    today = now.strftime("%Y-%m-%d")
+    current = _tjl_setups()
+    state = _load_state()
+    prev = set(state.get("alerted_tjl", [])) if state.get("date") == today else set()
+
+    if sess == "Open":
+        new = [s for s in current if s not in prev]
+        if not new:
+            print("[telegram] intraday: no new TJL setup; skipping")
+            return False
+        msg = to_telegram() + f"\n\n<b>🆕 New TJL:</b> {', '.join(new)}"
+        if not C.send_telegram(msg):
+            return False
+        _save_state({"date": today, "alerted_tjl": sorted(prev | set(current))})
+        return True
+
+    if not C.send_telegram(to_telegram()):
+        return False
+    _save_state({"date": today, "alerted_tjl": sorted(prev | set(current))})
+    return True
+
+
 if __name__ == "__main__":
     import sys
     public = "--public" in sys.argv
@@ -190,5 +252,5 @@ if __name__ == "__main__":
     print(f"Dashboard{' (public)' if public else ''} -> {p}")
     if "--telegram" in sys.argv:
         C.load_env()
-        ok = C.send_telegram(to_telegram())
+        ok = send_alert()
         print(f"telegram sent: {ok}")
