@@ -32,6 +32,7 @@ jobs:
       - name: Run scanners
         run: |
           python pipeline/scanner_a.py
+          python pipeline/scanner_d.py
           python pipeline/scanner_b.py
           python pipeline/scanner_c.py
       - name: Build & publish dashboard

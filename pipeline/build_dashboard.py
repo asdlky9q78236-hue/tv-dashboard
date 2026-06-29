@@ -166,6 +166,9 @@ def how_to_read_html():
         "<ul class='small mb-2'>"
         "<li><b>Gap screener</b> — wat beweegt er vóór de opening (meestal op nieuws). "
         "Handig om te zien wat 'in beweging' is vandaag.</li>"
+        "<li><b>VWAP-watch</b> — kijkt of die gappers na de opening <b>boven of onder VWAP</b> "
+        "(de gele lijn) handelen: boven = momentum (long), onder na een grote gap = mislukte "
+        "gap (fade-short). Met SPY-marktcontext erbij.</li>"
         "<li><b>Momentum-setups (TJL)</b> — checkt of vaste aandelen uitbreken in een opgaande "
         "trend. Groen 'setup actief' = alle voorwaarden kloppen nú.</li></ul>"
         "<p class='small mb-1'><b>Wat traders hier doorgaans mee doen</b> (educatief):</p>"
@@ -199,6 +202,42 @@ def scanner_c_html(rep):
     return card("🪙 Crypto pairs", body)
 
 
+def scanner_d_html(rep):
+    intro = ("<div class='small text-muted mb-2'>Live check op de dag-gappers: staan ze "
+             "<b>boven of onder VWAP</b> (de gele lijn uit de video)? Boven + bij dagtop = "
+             "momentum (<b>long-watch</b>); flink gegapt maar <b>onder VWAP</b> teruggevallen = "
+             "mislukte gap (<b>fade-short</b>). Signalen, geen koopadvies.</div>")
+    if not rep:
+        return card("🌀 VWAP-watch (live movers)",
+                    intro + '<div class="text-muted">Geen data.</div>')
+    m = rep.get("market", {})
+    banner = ""
+    if m.get("pct") is not None:
+        tone_col = {"rugwind": "success", "tegenwind": "danger"}.get(m.get("tone"), "secondary")
+        banner = (f"<div class='mb-2'><span class='badge bg-{tone_col}'>Markt: SPY "
+                  f"{m['pct']:+}% · {m.get('tone', '?')}</span> "
+                  f"<span class='small text-muted'>(handel je mét of tegen de markt in?)</span></div>")
+    kinds = {"long_watch": ("Long-watch", "success"),
+             "fade_short_watch": ("Fade-short", "danger"),
+             "neutral": ("Neutraal", "secondary"),
+             "premarket": ("Wacht op open", "secondary")}
+    items = ""
+    for r in rep.get("results", []):
+        if not r.get("ok"):
+            continue
+        label, col = kinds.get(r["kind"], ("?", "secondary"))
+        sym = html.escape(r["symbol"])
+        vw = f" · VWAP ${r['vwap']}" if r.get("vwap") else ""
+        items += (f"<div class='border-top border-secondary py-2'>"
+                  f"<div class='d-flex justify-content-between align-items-center'>"
+                  f"<span><b>{sym}</b> <span class='small text-muted'>${r.get('last')}{vw}</span></span>"
+                  f"<span class='badge bg-{col}'>{label}</span></div>"
+                  f"<div class='small text-muted'>{', '.join(r.get('why', []))}</div></div>")
+    if not items:
+        items = "<div class='text-muted small'>Geen movers om te tonen.</div>"
+    return card("🌀 VWAP-watch (live movers)", intro + banner + items)
+
+
 def perf_html():
     agg = P.aggregate(P.pair_trades(P.load_trades()))
     pf = agg["profit_factor"]; pf_s = "∞" if pf is None else pf
@@ -219,9 +258,11 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     now = C.et_now()
     sess, sess_col = _session(now)
     a, b, c = _latest("scanner_a"), _latest("scanner_b"), _latest("scanner_c")
+    d = _latest("scanner_d")
 
     parts = [how_to_read_html(),
-             scanner_a_html(a), scanner_b_html(b), scanner_c_html(c)]
+             scanner_a_html(a), scanner_d_html(d),
+             scanner_b_html(b), scanner_c_html(c)]
     if not public:                       # keep P&L private off the public URL
         parts.append(perf_html())
     cards = "".join(parts)
@@ -262,6 +303,17 @@ def to_telegram() -> str:
     if b and b.get("hits"):
         lines.append(f"\n<b>Momentum-setups (TJL):</b> {', '.join(b['hits'])} "
                      f"<i>(uitbraak in optrend)</i>")
+    d = _latest("scanner_d")
+    if d:
+        m = d.get("market", {})
+        if m.get("pct") is not None:
+            lines.append(f"\n<b>Markt:</b> SPY {m['pct']:+}% ({m.get('tone', '?')})")
+        if d.get("long_watch"):
+            lines.append(f"<b>Long-watch:</b> {', '.join(d['long_watch'])} "
+                         f"<i>(boven VWAP, momentum)</i>")
+        if d.get("short_watch"):
+            lines.append(f"<b>Fade-short:</b> {', '.join(d['short_watch'])} "
+                         f"<i>(gap faalde onder VWAP)</i>")
     if c and c.get("live_setups"):
         lines.append(f"<b>Crypto live:</b> {', '.join(c['live_setups'])}")
     agg = P.aggregate(P.pair_trades(P.load_trades()))
@@ -297,41 +349,58 @@ def _save_state(state: dict) -> None:
         print(f"[telegram] could not write state: {e}")
 
 
-def _tjl_setups() -> list[str]:
+_SETUP_WORDS = {"tjl": "TJL", "long": "long", "short": "fade-short"}
+
+
+def _active_setups() -> list[str]:
+    """Setup keys across scanners, e.g. 'AMD:tjl', 'SHOP:short'."""
+    keys = []
     b = _latest("scanner_b")
-    return sorted(b.get("hits", [])) if b else []
+    if b:
+        keys += [f"{s}:tjl" for s in b.get("hits", [])]
+    d = _latest("scanner_d")
+    if d:
+        keys += [f"{s}:long" for s in d.get("long_watch", [])]
+        keys += [f"{s}:short" for s in d.get("short_watch", [])]
+    return sorted(set(keys))
+
+
+def _fmt_setup(key: str) -> str:
+    sym, _, kind = key.partition(":")
+    return f"{sym} ({_SETUP_WORDS.get(kind, kind)})"
 
 
 def send_alert() -> bool:
     """Send the Trading Control summary, with intraday dedup.
 
-    Open session: only send when a TJL setup appears that we haven't alerted on
-    yet today (avoids repeating the same setups every 30 min). Any other session
-    (premarket morning briefing, after-hours, manual): always send, and seed the
-    day's TJL baseline so intraday only flags genuinely new ones.
-    Returns True when a message was actually sent.
+    Open session: only send when a setup appears (TJL pass, long-watch or
+    fade-short) that we haven't alerted on yet today, so the 30-min cadence
+    doesn't repeat itself. Any other session (premarket briefing, after-hours,
+    manual): always send, and seed the day's baseline so intraday only flags
+    genuinely new ones. Returns True when a message was actually sent.
     """
     now = C.et_now()
     sess, _ = _session(now)
     today = now.strftime("%Y-%m-%d")
-    current = _tjl_setups()
+    current = _active_setups()
     state = _load_state()
-    prev = set(state.get("alerted_tjl", [])) if state.get("date") == today else set()
+    prev = set(state.get("alerted", [])) if state.get("date") == today else set()
 
     if sess == "Open":
-        new = [s for s in current if s not in prev]
+        new = [k for k in current if k not in prev]
         if not new:
-            print("[telegram] intraday: no new TJL setup; skipping")
+            print("[telegram] intraday: no new setup; skipping")
             return False
-        msg = to_telegram() + f"\n\n<b>🆕 New TJL:</b> {', '.join(new)}"
+        msg = (to_telegram() + "\n\n<b>🆕 Nieuw:</b> "
+               + ", ".join(_fmt_setup(k) for k in new))
         if not C.send_telegram(msg):
             return False
-        _save_state({"date": today, "alerted_tjl": sorted(prev | set(current))})
+        _save_state({"date": today, "alerted": sorted(prev | set(current))})
         return True
 
     if not C.send_telegram(to_telegram()):
         return False
-    _save_state({"date": today, "alerted_tjl": sorted(prev | set(current))})
+    _save_state({"date": today, "alerted": sorted(prev | set(current))})
     return True
 
 
