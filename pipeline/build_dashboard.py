@@ -17,6 +17,7 @@ from pathlib import Path
 
 import common as C
 import compute_perf as P
+import config as CFG
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "out"
@@ -53,9 +54,65 @@ def card(title, body, extra=""):
             f'{body}</div></div></div>')
 
 
+# --------------------------------------------------------------------------
+# Plain-language interpretation helpers (so a non-pro can read the data)
+# --------------------------------------------------------------------------
+def _rvol_words(rv) -> str:
+    if not rv:
+        return "volume onbekend"
+    if rv >= 2:
+        return f"ongewoon druk ({rv}× normaal)"
+    if rv >= 1.2:
+        return f"drukker dan normaal ({rv}×)"
+    if rv >= 0.8:
+        return f"rond normaal volume ({rv}×)"
+    return f"rustige handel ({rv}×)"
+
+
+def _gap_read(h) -> str:
+    g = h["gap_pct"]; rv = h.get("rvol", 0)
+    richting = "omhoog" if g >= 0 else "omlaag"
+    grootte = "Grote" if abs(g) >= 7 else ("Flinke" if abs(g) >= 4 else "Lichte")
+    if rv and rv >= 2:
+        extra = " — sterke, meestal nieuwsgedreven beweging"
+    elif rv and rv < 1:
+        extra = " — zonder volume minder overtuigend"
+    else:
+        extra = ""
+    return f"{grootte} sprong {richting}, {_rvol_words(rv)}{extra}."
+
+
+_TJL_LABELS = {
+    "D1_above_daily200": "boven 200-daags gemiddelde (opgaande trend)",
+    "D2_above_prior_high": "boven gisteren's hoogste koers",
+    "I1_above_intraday200": "boven de intraday-trendlijn",
+    "I2_above_pmh": "boven de premarket-piek",
+    "I3_at_hod": "op of nabij de dagtop",
+    "I4_rvol_ok": f"volume ≥ {CFG.SCANNER_B_RVOL_MIN}× normaal",
+}
+
+
+def _tjl_status(r):
+    """(label, kleur, samenvatting, [ontbrekende voorwaarden]) in gewone taal."""
+    if not r.get("ok"):
+        return ("Datafout", "secondary", "Geen data beschikbaar.", [])
+    missing = [_TJL_LABELS[k] for k, v in r["conditions"].items() if not v]
+    if r["PASS"]:
+        return ("✅ Setup actief", "success",
+                "Alle voorwaarden voldaan — momentum-uitbraak nú.", missing)
+    if r["daily_pass"]:
+        return ("Trend OK · wacht op uitbraak", "warning",
+                "In opgaande trend, maar de intraday-uitbraak is nog niet bevestigd.", missing)
+    return ("Wordt gevolgd", "secondary",
+            "Nog geen setup — voldoet niet aan de trend/uitbraak-voorwaarden.", missing)
+
+
 def scanner_a_html(rep):
+    intro = ("<div class='small text-muted mb-2'>Aandelen die <b>vóór de opening</b> al flink "
+             "bewegen t.o.v. de slotkoers van gisteren. Grote sprong + hoog volume = ongewone "
+             "activiteit, vaak door nieuws.</div>")
     if not rep or not rep.get("hits"):
-        return card("📈 Gap screener", '<div class="text-muted">No candidates.</div>')
+        return card("📈 Gap screener", intro + '<div class="text-muted">Geen kandidaten nu.</div>')
     rows = ""
     for h in rep["hits"]:
         sign = "+" if h["gap_pct"] >= 0 else ""
@@ -65,31 +122,64 @@ def scanner_a_html(rep):
         rows += (f"<tr><td><b>{html.escape(h['symbol'])}</b></td>"
                  f"<td class='text-{col}'>{sign}{h['gap_pct']}%</td>"
                  f"<td>{h['rvol']}x</td><td>{mc}</td>"
-                 f"<td class='small text-muted'>{html.escape(cat)}</td></tr>")
-    body = (f"<div class='small text-muted mb-2'>mode {rep['filters'].get('mode')} · "
-            f"gap≥{rep['filters'].get('gap_min_pct')}% · {rep['count']} hits</div>"
+                 f"<td class='small text-muted'>{html.escape(cat) or '—'}</td></tr>"
+                 f"<tr class='small'><td></td>"
+                 f"<td colspan='4' class='text-info pb-2'>↳ {_gap_read(h)}</td></tr>")
+    body = (intro +
+            f"<div class='small text-muted mb-2'>{rep['count']} kandidaten · "
+            f"gap≥{rep['filters'].get('gap_min_pct')}%</div>"
             f"<div class='table-responsive'><table class='table table-dark table-sm align-middle'>"
-            f"<thead><tr><th>Sym</th><th>Gap</th><th>RVol</th><th>Cap</th><th>Catalyst</th></tr></thead>"
-            f"<tbody>{rows}</tbody></table></div>")
+            f"<thead><tr><th>Sym</th><th>Gap</th><th>RVol</th><th>Grootte</th><th>Reden/nieuws</th></tr></thead>"
+            f"<tbody>{rows}</tbody></table></div>"
+            "<div class='small text-muted mt-1'><b>Gap</b> = verschil met gisteren · "
+            "<b>RVol</b> = volume vs normaal (&gt;1 = drukker) · "
+            "<b>Grootte</b> = marktwaarde bedrijf</div>")
     return card("📈 Gap screener", body)
 
 
 def scanner_b_html(rep):
+    intro = ("<div class='small text-muted mb-2'>Een <b>momentum-strategie</b>: zoekt een aandeel "
+             "in een opgaande trend dat uitbreekt naar nieuwe highs op sterk volume. Vaste "
+             "watchlist; een 'setup' ontstaat pas als <b>álle</b> voorwaarden kloppen.</div>")
     if not rep:
-        return card("🎯 TJL setups", '<div class="text-muted">No data.</div>')
-    rows = ""
+        return card("🎯 Momentum-setups (TJL)", intro + '<div class="text-muted">Geen data.</div>')
+    items = ""
     for r in rep.get("results", []):
-        if not r.get("ok"):
-            rows += f"<tr><td>{html.escape(r['symbol'])}</td><td colspan=3 class='text-muted'>error</td></tr>"
-            continue
-        badge = ("PASS", "success") if r["PASS"] else (("daily", "warning") if r["daily_pass"] else ("—", "secondary"))
-        rows += (f"<tr><td><b>{html.escape(r['symbol'])}</b></td>"
-                 f"<td><span class='badge bg-{badge[1]}'>{badge[0]}</span></td>"
-                 f"<td>${r['last']}</td><td>{r.get('rvol','-')}x</td></tr>")
-    hits = ", ".join(rep.get("hits", [])) or "none"
-    body = (f"<div class='small text-muted mb-2'>passing: {hits}</div>"
-            f"<table class='table table-dark table-sm'><tbody>{rows}</tbody></table>")
-    return card("🎯 TJL setups", body)
+        label, col, summ, missing = _tjl_status(r)
+        sym = html.escape(r.get("symbol", "?"))
+        price = f"${r['last']}" if r.get("ok") else ""
+        miss = ""
+        if missing and r.get("ok") and not r["PASS"]:
+            miss = ("<div class='small text-muted'>Nog nodig: " + ", ".join(missing) + "</div>")
+        items += (f"<div class='border-top border-secondary py-2'>"
+                  f"<div class='d-flex justify-content-between align-items-center'>"
+                  f"<span><b>{sym}</b> <span class='small text-muted'>{price}</span></span>"
+                  f"<span class='badge bg-{col}'>{label}</span></div>"
+                  f"<div class='small'>{summ}</div>{miss}</div>")
+    return card("🎯 Momentum-setups (TJL)", intro + items)
+
+
+def how_to_read_html():
+    body = (
+        "<p class='small mb-2'>Dit dashboard signaleert <b>kansen</b> die het automatisch "
+        "scant — geen koopadviezen. Er draaien twee scanners:</p>"
+        "<ul class='small mb-2'>"
+        "<li><b>Gap screener</b> — wat beweegt er vóór de opening (meestal op nieuws). "
+        "Handig om te zien wat 'in beweging' is vandaag.</li>"
+        "<li><b>Momentum-setups (TJL)</b> — checkt of vaste aandelen uitbreken in een opgaande "
+        "trend. Groen 'setup actief' = alle voorwaarden kloppen nú.</li></ul>"
+        "<p class='small mb-1'><b>Wat traders hier doorgaans mee doen</b> (educatief):</p>"
+        "<ul class='small mb-2'>"
+        "<li>De lijst als <b>watchlist</b> gebruiken en een koersalert zetten i.p.v. meteen handelen.</li>"
+        "<li>Op <b>bevestiging</b> wachten — een gap die al ver gelopen is, niet achternajagen.</li>"
+        "<li>Eerst <b>op papier oefenen</b> (paper trading) om het ritme te leren zonder risico.</li>"
+        "<li>Vooraf bepalen <b>hoeveel je bereid bent te verliezen</b> per idee.</li></ul>"
+        "<div class='small text-warning'>⚠️ Educatief, geen financieel advies. "
+        "Handelen brengt risico op verlies met zich mee.</div>"
+    )
+    return ('<div class="col-12"><div class="card bg-dark border-secondary">'
+            '<div class="card-body"><h6 class="text-info mb-3">📚 Hoe lees ik dit?</h6>'
+            f'{body}</div></div></div>')
 
 
 def scanner_c_html(rep):
@@ -130,7 +220,8 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     sess, sess_col = _session(now)
     a, b, c = _latest("scanner_a"), _latest("scanner_b"), _latest("scanner_c")
 
-    parts = [scanner_a_html(a), scanner_b_html(b), scanner_c_html(c)]
+    parts = [how_to_read_html(),
+             scanner_a_html(a), scanner_b_html(b), scanner_c_html(c)]
     if not public:                       # keep P&L private off the public URL
         parts.append(perf_html())
     cards = "".join(parts)
@@ -164,12 +255,13 @@ def to_telegram() -> str:
              f"<i>{now:%Y-%m-%d %H:%M} ET</i>"]
     if a and a.get("hits"):
         top = a["hits"][:6]
-        lines.append("\n<b>Gap screener:</b>")
+        lines.append("\n<b>Gap screener</b> <i>(beweging vóór open vs gisteren)</i>:")
         for h in top:
             s = "+" if h["gap_pct"] >= 0 else ""
             lines.append(f"  {h['symbol']} {s}{h['gap_pct']}%  rvol {h['rvol']}x")
     if b and b.get("hits"):
-        lines.append(f"\n<b>TJL setups:</b> {', '.join(b['hits'])}")
+        lines.append(f"\n<b>Momentum-setups (TJL):</b> {', '.join(b['hits'])} "
+                     f"<i>(uitbraak in optrend)</i>")
     if c and c.get("live_setups"):
         lines.append(f"<b>Crypto live:</b> {', '.join(c['live_setups'])}")
     agg = P.aggregate(P.pair_trades(P.load_trades()))
@@ -177,6 +269,7 @@ def to_telegram() -> str:
         pf = agg["profit_factor"]
         lines.append(f"\n<b>P&L:</b> ${agg['gross_pnl']:+,.0f} · "
                      f"win {agg['win_rate']}% · PF {'∞' if pf is None else pf}")
+    lines.append("\n<i>ℹ️ Signalen, geen financieel advies. Volledige uitleg op het dashboard.</i>")
     return "\n".join(lines)
 
 
