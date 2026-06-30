@@ -117,7 +117,9 @@ def scanner_a_html(rep):
     for h in rep["hits"]:
         sign = "+" if h["gap_pct"] >= 0 else ""
         col = "success" if h["gap_pct"] >= 0 else "danger"
-        mc = f"${h['market_cap_b']}B" if h.get("market_cap_b") else "-"
+        mc_b = f"${h['market_cap_b']}B" if h.get("market_cap_b") else "-"
+        cap = h.get("cap_class")
+        mc = f"{mc_b} <span class='small text-muted'>{cap}</span>" if cap else mc_b
         cat = (h["news"][0]["title"] if h.get("news") else "")[:60]
         rows += (f"<tr><td><b>{html.escape(h['symbol'])}</b></td>"
                  f"<td class='text-{col}'>{sign}{h['gap_pct']}%</td>"
@@ -166,9 +168,10 @@ def how_to_read_html():
         "<ul class='small mb-2'>"
         "<li><b>Gap screener</b> — wat beweegt er vóór de opening (meestal op nieuws). "
         "Handig om te zien wat 'in beweging' is vandaag.</li>"
-        "<li><b>VWAP-watch</b> — kijkt of die gappers na de opening <b>boven of onder VWAP</b> "
-        "(de gele lijn) handelen: boven = momentum (long), onder na een grote gap = mislukte "
-        "gap (fade-short). Met SPY-marktcontext erbij.</li>"
+        "<li><b>VWAP-watch</b> — volgt de gappers t.o.v. VWAP. <b>VWAP-pullback</b> (terug naar "
+        "VWAP en houdt) is HumbledTrader's echte instap — koop de dip, niet de top. "
+        "<b>Long (extended)</b> staat op de dagtop (najagen = risico); <b>fade-short</b> verloor "
+        "VWAP na een grote gap. Met SPY-marktcontext en cap-klasse (small/mid/large) erbij.</li>"
         "<li><b>Momentum-setups (TJL)</b> — checkt of vaste aandelen uitbreken in een opgaande "
         "trend. Groen 'setup actief' = alle voorwaarden kloppen nú.</li></ul>"
         "<p class='small mb-1'><b>Wat traders hier doorgaans mee doen</b> (educatief):</p>"
@@ -203,10 +206,11 @@ def scanner_c_html(rep):
 
 
 def scanner_d_html(rep):
-    intro = ("<div class='small text-muted mb-2'>Live check op de dag-gappers: staan ze "
-             "<b>boven of onder VWAP</b> (de gele lijn uit de video)? Boven + bij dagtop = "
-             "momentum (<b>long-watch</b>); flink gegapt maar <b>onder VWAP</b> teruggevallen = "
-             "mislukte gap (<b>fade-short</b>). Signalen, geen koopadvies.</div>")
+    intro = ("<div class='small text-muted mb-2'>Live check op de dag-gappers t.o.v. <b>VWAP</b> "
+             "(de gele lijn uit de video). <b>VWAP-pullback</b> = teruggezakt naar VWAP en houdt "
+             "het — dít is HumbledTrader's eigenlijke instap (koop de dip, niet de top). "
+             "<b>Long (extended)</b> = op de dagtop, momentum maar najagen is risico. "
+             "<b>Fade-short</b> = grote gap die VWAP verloor. Signalen, geen koopadvies.</div>")
     if not rep:
         return card("🌀 VWAP-watch (live movers)",
                     intro + '<div class="text-muted">Geen data.</div>')
@@ -217,7 +221,8 @@ def scanner_d_html(rep):
         banner = (f"<div class='mb-2'><span class='badge bg-{tone_col}'>Markt: SPY "
                   f"{m['pct']:+}% · {m.get('tone', '?')}</span> "
                   f"<span class='small text-muted'>(handel je mét of tegen de markt in?)</span></div>")
-    kinds = {"long_watch": ("Long-watch", "success"),
+    kinds = {"long_pullback": ("VWAP-pullback", "success"),
+             "long_extended": ("Long (extended)", "info"),
              "fade_short_watch": ("Fade-short", "danger"),
              "neutral": ("Neutraal", "secondary"),
              "premarket": ("Wacht op open", "secondary")}
@@ -227,10 +232,12 @@ def scanner_d_html(rep):
             continue
         label, col = kinds.get(r["kind"], ("?", "secondary"))
         sym = html.escape(r["symbol"])
+        cap = r.get("cap_class")
+        cap_badge = f" <span class='badge bg-dark border border-secondary text-muted'>{cap}-cap</span>" if cap else ""
         vw = f" · VWAP ${r['vwap']}" if r.get("vwap") else ""
         items += (f"<div class='border-top border-secondary py-2'>"
                   f"<div class='d-flex justify-content-between align-items-center'>"
-                  f"<span><b>{sym}</b> <span class='small text-muted'>${r.get('last')}{vw}</span></span>"
+                  f"<span><b>{sym}</b>{cap_badge} <span class='small text-muted'>${r.get('last')}{vw}</span></span>"
                   f"<span class='badge bg-{col}'>{label}</span></div>"
                   f"<div class='small text-muted'>{', '.join(r.get('why', []))}</div></div>")
     if not items:
@@ -308,9 +315,12 @@ def to_telegram() -> str:
         m = d.get("market", {})
         if m.get("pct") is not None:
             lines.append(f"\n<b>Markt:</b> SPY {m['pct']:+}% ({m.get('tone', '?')})")
-        if d.get("long_watch"):
-            lines.append(f"<b>Long-watch:</b> {', '.join(d['long_watch'])} "
-                         f"<i>(boven VWAP, momentum)</i>")
+        if d.get("long_pullback"):
+            lines.append(f"<b>VWAP-pullback:</b> {', '.join(d['long_pullback'])} "
+                         f"<i>(dip naar VWAP die houdt — haar instap)</i>")
+        if d.get("long_extended"):
+            lines.append(f"<b>Long (extended):</b> {', '.join(d['long_extended'])} "
+                         f"<i>(op dagtop — niet najagen)</i>")
         if d.get("short_watch"):
             lines.append(f"<b>Fade-short:</b> {', '.join(d['short_watch'])} "
                          f"<i>(gap faalde onder VWAP)</i>")
@@ -349,18 +359,20 @@ def _save_state(state: dict) -> None:
         print(f"[telegram] could not write state: {e}")
 
 
-_SETUP_WORDS = {"tjl": "TJL", "long": "long", "short": "fade-short"}
+_SETUP_WORDS = {"tjl": "TJL", "pullback": "VWAP-pullback",
+                "ext": "long (extended)", "short": "fade-short"}
 
 
 def _active_setups() -> list[str]:
-    """Setup keys across scanners, e.g. 'AMD:tjl', 'SHOP:short'."""
+    """Setup keys across scanners, e.g. 'AMD:tjl', 'SHOP:short', 'PLUG:pullback'."""
     keys = []
     b = _latest("scanner_b")
     if b:
         keys += [f"{s}:tjl" for s in b.get("hits", [])]
     d = _latest("scanner_d")
     if d:
-        keys += [f"{s}:long" for s in d.get("long_watch", [])]
+        keys += [f"{s}:pullback" for s in d.get("long_pullback", [])]
+        keys += [f"{s}:ext" for s in d.get("long_extended", [])]
         keys += [f"{s}:short" for s in d.get("short_watch", [])]
     return sorted(set(keys))
 

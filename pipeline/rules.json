@@ -4,9 +4,9 @@
   "_scanner_criteria_note": "HumbledTrader's funnel = LOOSE prefilter over a BROAD universe (gap>=3%, price>=$3, top 20) to get enough candidates, then a STRICT 6-filter entry (above prior-day high, prev close>200SMA, gap>=3%, above premarket high, above HOD, RVOL>=2x). We mirror that: loose Scanner A prefilter below, strict conditions in Scanner B.",
 
   "scanner_a": {
-    "_note": "HumbledTrader gap screener. mode=largecap: gap>=3% & mcap>$10B; mode=smallcap: gap>=10% & mcap<$800M; mode=any: no mcap filter. rvol_min mirrors her Finviz 'relative volume > 1'.",
-    "mode": "largecap",
-    "universe_file": "sp500.txt",
+    "_note": "HumbledTrader gap screener. mode=largecap: gap>=3% & mcap>$10B; mode=smallcap: gap>=10% & mcap<$800M; mode=any: no mcap filter (surfaces small+mid+large gappers, labelled by cap_class). Universe = sp500 + curated small/mid momentum names. True dynamic low-float discovery still needs a screener API.",
+    "mode": "any",
+    "universe_file": "universe_all.txt",
     "gap_min_pct": 3.0,
     "gap_min_pct_smallcap": 10.0,
     "price_min": 1.0,

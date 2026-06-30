@@ -30,8 +30,12 @@ import yfinance as yf
 import common as C
 
 TOP_GAPPERS = 6
-GAP_LONG_MIN = 3.0     # min gap% to consider a long-continuation watch
-GAP_FADE_MIN = 5.0     # min gap% for a fade/short candidate
+GAP_LONG_MIN = 3.0      # min gap% to consider a long watch
+GAP_FADE_MIN = 5.0      # min gap% for a fade/short candidate
+VWAP_NEAR = 0.015       # within 1.5% above VWAP = "back at VWAP"
+PULLBACK_OFF_HIGH = 0.015  # pulled back >=1.5% off the day's high
+OVEREXT_PM_PCT = 15.0   # premarket run-up over this = overextended (her rule)
+OVEREXT_VWAP = 0.10     # trading >10% above VWAP = extended / chase risk
 
 
 def _series(df, col):
@@ -42,9 +46,13 @@ def _series(df, col):
 
 
 def _session_vwap(intra):
-    """Return (vwap, pmh, hod) from 1m bars; VWAP over the regular session."""
+    """Return (vwap, pmh, hod, recent_min) from 1m bars.
+
+    vwap over the regular session; recent_min = lowest of the last 5 regular
+    closes (used to test whether price is HOLDING VWAP after a pullback).
+    """
     if intra is None or intra.empty:
-        return None, None, None
+        return None, None, None, None
     high = _series(intra, "High"); low = _series(intra, "Low")
     close = _series(intra, "Close"); vol = _series(intra, "Volume")
     idx = close.index
@@ -62,9 +70,10 @@ def _session_vwap(intra):
         typ = (h + l + c) / 3.0
         denom = float(v.sum())
         vwap = float((typ * v).sum() / denom) if denom > 0 else None
+        recent_min = float(c.tail(5).min())
     else:
-        hod, vwap = None, None
-    return vwap, pmh, hod
+        hod, vwap, recent_min = None, None, None
+    return vwap, pmh, hod, recent_min
 
 
 def _market_context() -> dict:
@@ -77,7 +86,7 @@ def _market_context() -> dict:
         dclose = _series(d, "Close")
         prev = float(dclose.iloc[-2]) if len(dclose) >= 2 else float(dclose.iloc[-1])
         last = float(_series(i, "Close").iloc[-1])
-        vwap, _, _ = _session_vwap(i)
+        vwap, _, _, _ = _session_vwap(i)
         pct = round((last - prev) / prev * 100, 2)
         above = vwap is not None and last >= vwap
         if pct > 0 and above:
@@ -92,8 +101,8 @@ def _market_context() -> dict:
         return {"symbol": "SPY", "error": str(e)}
 
 
-def evaluate(sym: str, prev_close) -> dict:
-    res = {"symbol": sym, "ok": False}
+def evaluate(sym: str, prev_close, cap_class=None) -> dict:
+    res = {"symbol": sym, "ok": False, "cap_class": cap_class}
     try:
         intra = yf.download(sym, period="1d", interval="1m", prepost=True,
                             auto_adjust=False, progress=False)
@@ -102,34 +111,49 @@ def evaluate(sym: str, prev_close) -> dict:
             res["error"] = "no intraday"
             return res
         last = float(close.iloc[-1])
-        vwap, pmh, hod = _session_vwap(intra)
+        vwap, pmh, hod, recent_min = _session_vwap(intra)
         gap = round((last - prev_close) / prev_close * 100, 2) if prev_close else None
         above_vwap = vwap is not None and last >= vwap
+
+        # overextension (her "avoid >15% premarket / don't chase extended")
+        pm_runup = round((pmh - prev_close) / prev_close * 100, 2) if (pmh and prev_close) else None
+        dist_vwap = (last - vwap) / vwap if vwap else None
+        overextended = bool((pm_runup is not None and pm_runup > OVEREXT_PM_PCT)
+                            or (dist_vwap is not None and dist_vwap > OVEREXT_VWAP))
 
         if vwap is None:
             kind, why = "premarket", ["beurs nog niet open - VWAP volgt na 09:30"]
         else:
             near_hod = hod is not None and last >= 0.995 * hod
             above_pmh = pmh is None or last >= pmh
-            below_hod = hod is not None and last <= 0.99 * hod
-            if gap is not None and gap >= GAP_LONG_MIN and above_vwap and near_hod and above_pmh:
-                kind = "long_watch"
-                why = ["boven VWAP", "bij/nabij dagtop"]
-                if pmh is not None:
-                    why.append("boven premarket-piek")
+            below_hod = hod is not None and last <= (1 - PULLBACK_OFF_HIGH) * hod
+            near_vwap = above_vwap and dist_vwap is not None and dist_vwap <= VWAP_NEAR
+            holding = recent_min is not None and recent_min >= vwap * 0.997
+            big_gap = gap is not None and gap >= GAP_LONG_MIN
+
+            if big_gap and near_vwap and below_hod and holding:
+                kind = "long_pullback"        # her preferred entry: dip to VWAP that holds
+                why = ["teruggetrokken naar VWAP", "houdt VWAP (bounce-zone)"]
+            elif big_gap and above_vwap and near_hod and above_pmh:
+                kind = "long_extended"        # at the highs - momentum but a chase
+                why = ["boven VWAP", "op dagtop (extended - niet najagen)"]
             elif gap is not None and gap >= GAP_FADE_MIN and not above_vwap and below_hod:
                 kind = "fade_short_watch"
                 why = [f"gapte +{gap}%", "verloor VWAP", "teruggevallen van dagtop"]
             else:
                 kind = "neutral"
                 why = ["boven VWAP" if above_vwap else "onder VWAP"]
+            if overextended and kind.startswith("long"):
+                why.append("⚠️ overextended")
 
         res.update({
             "ok": True, "last": round(last, 2), "gap_pct": gap,
             "vwap": round(vwap, 2) if vwap else None,
             "premarket_high": round(pmh, 2) if pmh else None,
             "intraday_high": round(hod, 2) if hod else None,
-            "above_vwap": above_vwap, "kind": kind, "why": why,
+            "premarket_runup_pct": pm_runup,
+            "above_vwap": above_vwap, "overextended": overextended,
+            "kind": kind, "why": why,
         })
     except Exception as e:
         res["error"] = str(e)
@@ -151,14 +175,17 @@ def scan() -> dict:
     a = _latest_a()
     hits = (a or {}).get("hits", [])[:TOP_GAPPERS]
     market = _market_context()
-    results = [evaluate(h["symbol"], h.get("prev_close")) for h in hits]
+    results = [evaluate(h["symbol"], h.get("prev_close"), h.get("cap_class")) for h in hits]
+    def syms(kind):
+        return [r["symbol"] for r in results if r.get("kind") == kind]
     return {
         "scanner": "D_vwap_watch",
         "generated_et": now.isoformat(),
         "market": market,
         "results": results,
-        "long_watch": [r["symbol"] for r in results if r.get("kind") == "long_watch"],
-        "short_watch": [r["symbol"] for r in results if r.get("kind") == "fade_short_watch"],
+        "long_pullback": syms("long_pullback"),
+        "long_extended": syms("long_extended"),
+        "short_watch": syms("fade_short_watch"),
     }
 
 

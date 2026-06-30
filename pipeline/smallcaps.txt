@@ -1,0 +1,59 @@
+# Recurring small/mid-cap momentum & gap names (HumbledTrader-style universe).
+# Static curated list — NOT dynamic discovery. True low-float runners that gap
+# on fresh news change daily and need a screener API (Finviz/Polygon) to catch.
+# Edit freely. Combined with sp500.txt into universe_all.txt by build step.
+# --- crypto miners / high-beta ---
+MARA
+RIOT
+CLSK
+WULF
+BITF
+HUT
+CIFR
+IREN
+BTBT
+# --- quantum / space / nuclear momentum ---
+IONQ
+QBTS
+RGTI
+LUNR
+RKLB
+ASTS
+ACHR
+JOBY
+OKLO
+SMR
+NNE
+# --- EV / clean energy ---
+RIVN
+LCID
+NIO
+XPEV
+LI
+CHPT
+PLUG
+RUN
+FCEL
+QS
+GEVO
+# --- semis / AI small-mid ---
+AEHR
+INDI
+WOLF
+AAOI
+BBAI
+SOUN
+# --- biotech momentum ---
+VKTX
+CRSP
+IOVA
+RXRX
+CYTK
+# --- fintech / retail / high-beta ---
+SOFI
+AFRM
+UPST
+OPEN
+HOOD
+GME
+AMC

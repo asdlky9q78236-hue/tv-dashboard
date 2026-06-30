@@ -78,12 +78,22 @@ def scan(universe_file: str | None = None) -> dict:
             return mc is not None and mc <= CFG.SMALLCAP_MAX_USD
         return True
 
+    def cap_class(mc):
+        if mc is None:
+            return None
+        if mc < 2e9:
+            return "small"
+        if mc < 10e9:
+            return "mid"
+        return "large"
+
     hits = []
     for h in prelim:
         mc = caps.get(h["symbol"])
         if not mcap_ok(mc):
             continue
         h["market_cap_b"] = round(mc / 1e9, 2) if mc else None
+        h["cap_class"] = cap_class(mc)
         hits.append(h)
 
     hits.sort(key=lambda h: abs(h["gap_pct"]), reverse=True)
