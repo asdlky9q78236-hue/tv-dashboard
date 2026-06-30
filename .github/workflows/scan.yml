@@ -20,6 +20,7 @@ jobs:
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      FINVIZ_AUTH_TOKEN: ${{ secrets.FINVIZ_AUTH_TOKEN }}
       # Every trigger passes --telegram; build_dashboard's send_alert() decides
       # whether to actually send (premarket always; intraday only on new setups).
       TG: ${{ github.event_name == 'workflow_dispatch' && '--telegram' || '' }}

@@ -18,6 +18,7 @@ from pathlib import Path
 
 import common as C
 import config as CFG
+import finviz_gappers as FZ
 
 
 def load_universe(universe_file: str | None = None) -> list[str]:
@@ -31,9 +32,36 @@ def load_universe(universe_file: str | None = None) -> list[str]:
     return sorted(set(CFG.DEFAULT_UNIVERSE))
 
 
+def _finviz_report(fz: list[dict], now) -> dict:
+    """Build the scanner-A report from a Finviz gapper list (dynamic source)."""
+    for i, h in enumerate(fz):
+        h["news"] = C.get_news(h["symbol"], limit=2) if i < 8 else []
+    return {
+        "scanner": "A_premarket_gap",
+        "generated_et": now.isoformat(),
+        "is_premarket": C.is_premarket(now),
+        "source": "finviz",
+        "universe_size": None,
+        "filters": {"source": "finviz", "gap_min_pct": 4.0,
+                    "rule": "gap>=4%, price>$2, rvol>1.5, real stocks only"},
+        "count": len(fz),
+        "hits": fz,
+    }
+
+
 def scan(universe_file: str | None = None) -> dict:
-    universe = load_universe(universe_file)
     now = C.et_now()
+    # Prefer Finviz Elite for real dynamic gapper discovery (incl. small caps);
+    # fall back to the static-universe Yahoo scan if no token / fetch fails.
+    try:
+        fz = FZ.fetch_gappers(top_n=CFG.TOP_N)
+    except Exception as e:
+        print(f"[scanner_a] finviz error: {e}", file=sys.stderr)
+        fz = None
+    if fz:
+        return _finviz_report(fz, now)
+
+    universe = load_universe(universe_file)
     daily = C.get_daily_stats(universe)
     snap = C.get_premarket_snapshot(universe)
 
