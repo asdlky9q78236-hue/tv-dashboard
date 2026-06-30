@@ -256,6 +256,36 @@ def scanner_d_html(rep):
     return card("🌀 VWAP-watch (live movers)", intro + banner + items)
 
 
+ANALYSES_DIR = ROOT.parent / "analyses"
+
+
+def analyses_html():
+    """Card showing the per-signal VWAP analyses + screenshots (from analyses/log.json)."""
+    try:
+        log = json.loads((ANALYSES_DIR / "log.json").read_text(encoding="utf-8"))
+    except Exception:
+        log = []
+    if not log:
+        return ""
+    intro = ("<div class='small text-muted mb-2'>Live VWAP-analyses per signaal "
+             "(zelfde als in Telegram). Klik een afbeelding om te vergroten.</div>")
+    items = ""
+    for a in log[:10]:
+        img = html.escape(a.get("image", ""))
+        items += (
+            "<div class='border-top border-secondary py-2'>"
+            "<div class='d-flex justify-content-between align-items-center mb-1'>"
+            f"<span><b>{html.escape(a.get('symbol',''))}</b> "
+            f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span></span>"
+            f"<span class='small text-muted'>{html.escape(a.get('et_time',''))}</span></div>"
+            f"<div class='small text-muted mb-1'>{html.escape(a.get('findings',''))}</div>"
+            f"<a href='{img}' target='_blank'><img src='{img}' loading='lazy' "
+            "class='img-fluid rounded border border-secondary'></a></div>")
+    return ('<div class="col-12"><div class="card bg-dark border-secondary">'
+            '<div class="card-body"><h6 class="text-info mb-3">📸 Mijn analyses</h6>'
+            f'{intro}{items}</div></div></div>')
+
+
 def perf_html():
     agg = P.aggregate(P.pair_trades(P.load_trades()))
     pf = agg["profit_factor"]; pf_s = "∞" if pf is None else pf
@@ -279,7 +309,7 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     d = _latest("scanner_d")
 
     parts = [how_to_read_html(),
-             scanner_a_html(a), scanner_d_html(d),
+             scanner_a_html(a), scanner_d_html(d), analyses_html(),
              scanner_b_html(b), scanner_c_html(c)]
     if not public:                       # keep P&L private off the public URL
         parts.append(perf_html())

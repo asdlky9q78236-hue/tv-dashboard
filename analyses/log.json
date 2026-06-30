@@ -1,0 +1,10 @@
+[
+  {
+    "symbol": "JEM",
+    "kind": "fade_short_watch",
+    "label": "Fade-short",
+    "et_time": "2026-06-30 13:40 ET",
+    "findings": "Fade-short \u2014 gapte +260%, tikte VWAP $4,28 aan, afgewezen en eronder gesloten. Daarna hele sessie onder VWAP = verkopers in control (van ~$4,88 naar ~$3,00).",
+    "image": "analyses/JEM_20260630_154000.png"
+  }
+]
