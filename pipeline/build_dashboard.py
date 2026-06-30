@@ -164,16 +164,27 @@ def scanner_b_html(rep):
 def how_to_read_html():
     body = (
         "<p class='small mb-2'>Dit dashboard signaleert <b>kansen</b> die het automatisch "
-        "scant — geen koopadviezen. Er draaien twee scanners:</p>"
+        "scant — geen koopadviezen. Het is gebouwd rond de strategieën van "
+        "<b>HumbledTrader</b> (uit haar eigen video's):</p>"
+        "<p class='small mb-1'><b>📈 Haar strategieën in het kort</b></p>"
         "<ul class='small mb-2'>"
-        "<li><b>Gap screener</b> — wat beweegt er vóór de opening (meestal op nieuws). "
-        "Handig om te zien wat 'in beweging' is vandaag.</li>"
-        "<li><b>VWAP-watch</b> — volgt de gappers t.o.v. VWAP. <b>VWAP-pullback</b> (terug naar "
-        "VWAP en houdt) is HumbledTrader's echte instap — koop de dip, niet de top. "
-        "<b>Long (extended)</b> staat op de dagtop (najagen = risico); <b>fade-short</b> verloor "
-        "VWAP na een grote gap. Met SPY-marktcontext en cap-klasse (small/mid/large) erbij.</li>"
-        "<li><b>Momentum-setups (TJL)</b> — checkt of vaste aandelen uitbreken in een opgaande "
-        "trend. Groen 'setup actief' = alle voorwaarden kloppen nú.</li></ul>"
+        "<li><b>Gap &amp; Go (long)</b> — een small/mid-cap die op vers nieuws gapt. Ze koopt "
+        "<b>de pullback naar VWAP die houdt</b> (de dip), <b>niet</b> de breakout. Instaptypes: "
+        "break van de premarket-piek op een terugtest, 1e/2e pullback (bull-flag bij VWAP), "
+        "red-to-green (ochtenddip die terugkeert naar groen).</li>"
+        "<li><b>Fade (short)</b> — een grote gap die <b>faalt en VWAP verliest</b> "
+        "('fails VWAP → wegwezen'). Het tegenovergestelde spel op dezelfde gapper.</li>"
+        "<li><b>Vuistregels</b> — alleen de eerste ~1–2 uur na de opening; max 1–2 setups/dag; "
+        "vermijd <b>overextended</b> (>15% premarket gelopen); stop ~4%, neem winst in stukjes, "
+        "'breakout or bail' (loopt het niet door → eruit).</li></ul>"
+        "<p class='small mb-1'><b>Hoe de kaarten daarop aansluiten:</b></p>"
+        "<ul class='small mb-2'>"
+        "<li><b>Gap screener</b> — wat gapt er vandaag op nieuws (de jachtgrond), met cap-klasse.</li>"
+        "<li><b>VWAP-watch</b> — vertaalt dat live: <b>VWAP-pullback</b> = haar instap (koop de dip); "
+        "<b>Long (extended)</b> = op de top (najagen = risico); <b>fade-short</b> = gap die VWAP "
+        "verloor. Met SPY-marktcontext (rugwind/tegenwind).</li>"
+        "<li><b>Momentum-setups (TJL)</b> — vaste tickers; groen 'setup actief' = alle "
+        "voorwaarden kloppen nú.</li></ul>"
         "<p class='small mb-1'><b>Wat traders hier doorgaans mee doen</b> (educatief):</p>"
         "<ul class='small mb-2'>"
         "<li>De lijst als <b>watchlist</b> gebruiken en een koersalert zetten i.p.v. meteen handelen.</li>"
@@ -273,7 +284,7 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     if not public:                       # keep P&L private off the public URL
         parts.append(perf_html())
     cards = "".join(parts)
-    htmldoc = f"""<!doctype html><html lang="en"><head>
+    htmldoc = f"""<!doctype html><html lang="en" data-bs-theme="dark"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="refresh" content="120">
