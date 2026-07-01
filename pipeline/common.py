@@ -53,6 +53,30 @@ def et_now() -> dt.datetime:
     return dt.datetime.now(ET)
 
 
+def wb_grade(r: dict) -> str:
+    """Lightweight PROVISIONAL grade (A/B/C) for the Watchboard, from scanner_d data
+    only (gap, cap, structure, overextension, power-window). The full grade on the
+    card refines this with R:R + the 1-min trigger, so treat this as a first read."""
+    kind = r.get("kind")
+    above = r.get("above_vwap")
+    try:
+        g = float(r.get("gap_pct") or 0)
+    except Exception:
+        g = 0.0
+    t = et_now().time()
+    in_window = dt.time(9, 30) <= t < dt.time(11, 30)
+    aligned = (kind == "long_pullback" and above) or (kind == "fade_short_watch" and not above)
+    checks = [
+        aligned,
+        8 <= g <= 80,
+        r.get("cap_class") == "small",
+        not r.get("overextended"),
+        in_window,
+    ]
+    passed = sum(1 for c in checks if c)
+    return "A" if passed >= 4 else ("B" if passed >= 2 else "C")
+
+
 def is_premarket(now: dt.datetime | None = None) -> bool:
     now = now or et_now()
     t = now.time()

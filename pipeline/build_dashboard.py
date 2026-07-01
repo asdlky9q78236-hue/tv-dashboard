@@ -332,10 +332,15 @@ def watchboard_html():
             continue
         rel = "&gt;VWAP" if r.get("above_vwap") else "&lt;VWAP"
         cap = r.get("cap_class")
-        tag = f"{html.escape(r['symbol'])} <span class='text-muted small'>{rel}"
+        kind = r.get("kind", "neutral")
+        gr = C.wb_grade(r) if kind in ("long_pullback", "fade_short_watch") else None
+        gb = {"A": "<span class='badge bg-warning text-dark'>A</span> ",
+              "B": "<span class='badge bg-secondary'>B</span> ",
+              "C": "<span class='badge bg-dark border border-secondary text-muted'>C</span> "}.get(gr, "")
+        tag = f"{gb}{html.escape(r['symbol'])} <span class='text-muted small'>{rel}"
         tag += f" · {cap}" if cap else ""
         tag += "</span>"
-        groups.setdefault(r.get("kind", "neutral"), []).append(tag)
+        groups.setdefault(kind, []).append(tag)
     if not groups:
         return ""
     m = d.get("market", {})
