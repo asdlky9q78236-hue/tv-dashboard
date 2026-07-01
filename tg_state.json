@@ -1,12 +1,4 @@
 {
-  "date": "2026-06-30",
-  "alerted": [
-    "ABVX:pullback",
-    "AVAV:pullback",
-    "AVAV:short",
-    "CUPR:short",
-    "JEM:short",
-    "PAVS:short",
-    "SILC:short"
-  ]
+  "date": "2026-07-01",
+  "alerted": []
 }
