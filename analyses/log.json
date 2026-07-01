@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "SDOT",
+    "kind": "long_pullback",
+    "label": "VWAP-pullback",
+    "et_time": "2026-07-01 10:08 ET",
+    "date": "2026-07-01",
+    "flagged_ts": 1782914893,
+    "dir": "long",
+    "entry": 45.56,
+    "stop": 45.06,
+    "target": 53.0,
+    "rr": null,
+    "findings": "\ud83d\udcca SDOT \u2014 VWAP-pullback (live TV)\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +23.4%, dip naar VWAP $45.88 en houdt; boven 9 EMA ($45.31), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $45.06 (structuur, n\u00edet op VWAP)\nKEY: R/G $35.09 \u00b7 PDL $32.01 \u00b7 PDH $53.00 \u23f0 binnen haar power-window (eerste 2u).",
+    "image": "analyses/SDOT_20260701_100813.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "CANF",
     "kind": "fade_short_watch",
     "label": "Fade-short",
