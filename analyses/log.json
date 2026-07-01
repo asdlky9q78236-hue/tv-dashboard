@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "SOC",
+    "kind": "long_pullback",
+    "label": "VWAP-pullback",
+    "et_time": "2026-07-01 09:59 ET",
+    "date": "2026-07-01",
+    "flagged_ts": 1782914373,
+    "dir": "long",
+    "entry": 4.07,
+    "stop": 3.93,
+    "target": 4.29,
+    "rr": 1.7,
+    "findings": "\ud83d\udcca SOC \u2014 VWAP-pullback (live TV)\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +32.14%, dip naar VWAP $4.11 en houdt; onder 9 EMA ($4.15), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $3.93 (structuur, n\u00edet op VWAP) \u00b7 DOEL $4.29 \u00b7 R:R ~1:1.7\nKEY: R/G $3.08 \u00b7 PDL $2.88 \u00b7 PDH $4.29 \u23f0 binnen haar power-window (eerste 2u).",
+    "image": "analyses/SOC_20260701_095933.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "EHGO",
     "kind": "fade_short_watch",
     "label": "Fade-short",
