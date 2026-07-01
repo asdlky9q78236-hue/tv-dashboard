@@ -286,6 +286,47 @@ def analyses_html():
             f'{intro}{items}</div></div></div>')
 
 
+_WB_ORDER = [("long_pullback", "🟢 Pullback", "success"),
+             ("fade_short_watch", "🔴 Fade-short", "danger"),
+             ("long_extended", "🔵 Extended", "info"),
+             ("neutral", "⚪ Neutraal", "secondary"),
+             ("premarket", "⏳ Pre-open", "secondary")]
+
+
+def watchboard_html():
+    """Compact one-glance list of ALL current setups (from scanner_d)."""
+    d = _latest("scanner_d")
+    if not d:
+        return ""
+    groups = {}
+    for r in d.get("results", []):
+        if not r.get("ok"):
+            continue
+        rel = "&gt;VWAP" if r.get("above_vwap") else "&lt;VWAP"
+        cap = r.get("cap_class")
+        tag = f"{html.escape(r['symbol'])} <span class='text-muted small'>{rel}"
+        tag += f" · {cap}" if cap else ""
+        tag += "</span>"
+        groups.setdefault(r.get("kind", "neutral"), []).append(tag)
+    if not groups:
+        return ""
+    m = d.get("market", {})
+    banner = ""
+    if m.get("pct") is not None:
+        tone_col = {"rugwind": "success", "tegenwind": "danger"}.get(m.get("tone"), "secondary")
+        banner = (f"<span class='badge bg-{tone_col}'>Markt: SPY {m['pct']:+}% · "
+                  f"{m.get('tone', '?')}</span>")
+    rows = ""
+    for kind, label, col in _WB_ORDER:
+        if groups.get(kind):
+            rows += (f"<div class='mb-1'><span class='badge bg-{col}'>{label}</span> "
+                     f"{' · '.join(groups[kind])}</div>")
+    body = (f"<div class='small text-muted mb-2'>Alle movers in één oogopslag. {banner}</div>{rows}")
+    return ('<div class="col-12"><div class="card bg-dark border-info">'
+            '<div class="card-body"><h6 class="text-info mb-3">🖥️ Watchboard</h6>'
+            f'{body}</div></div></div>')
+
+
 def perf_html():
     agg = P.aggregate(P.pair_trades(P.load_trades()))
     pf = agg["profit_factor"]; pf_s = "∞" if pf is None else pf
@@ -308,7 +349,7 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     a, b, c = _latest("scanner_a"), _latest("scanner_b"), _latest("scanner_c")
     d = _latest("scanner_d")
 
-    parts = [how_to_read_html(),
+    parts = [watchboard_html(), how_to_read_html(),
              scanner_a_html(a), scanner_d_html(d), analyses_html(),
              scanner_b_html(b), scanner_c_html(c)]
     if not public:                       # keep P&L private off the public URL
