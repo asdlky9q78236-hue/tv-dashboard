@@ -337,6 +337,8 @@ def watchboard_html():
         cap = r.get("cap_class")
         kind = r.get("kind", "neutral")
         gr = C.wb_grade(r) if kind in ("long_pullback", "fade_short_watch") else None
+        if gr == "C":                      # overtrading brake: hide C-grade setups
+            continue
         gb = {"A": "<span class='badge bg-warning text-dark'>A</span> ",
               "B": "<span class='badge bg-secondary'>B</span> ",
               "C": "<span class='badge bg-dark border border-secondary text-muted'>C</span> "}.get(gr, "")
