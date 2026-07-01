@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "CANF",
+    "kind": "fade_short_watch",
+    "label": "Fade-short",
+    "et_time": "2026-07-01 10:04 ET",
+    "date": "2026-07-01",
+    "flagged_ts": 1782914671,
+    "dir": "short",
+    "entry": 4.89,
+    "stop": 5.29,
+    "target": 2.72,
+    "rr": 5.4,
+    "findings": "\ud83d\udcca CANF \u2014 Fade-short (live TV)\nSTATUS: onder VWAP \u00b7 verkopers-bias\nNU: small-cap +63.97%, tikte VWAP $5.21 \u2192 afgewezen; onder 9 EMA, RSI n.v.t. (te weinig bars), stijgend volume.\nACTIE: short-bias zolang onder VWAP; herhaald falen reclaim = zwak. (Zij is long-biased; short = risico.)\nSTOP $5.29 \u00b7 DOEL $2.72 \u00b7 R:R ~1:5.4\nKEY: R/G $2.97 \u00b7 PDL $2.72 \u00b7 PDH $2.98 \u23f0 binnen haar power-window (eerste 2u).",
+    "image": "analyses/CANF_20260701_100431.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "SOC",
     "kind": "long_pullback",
     "label": "VWAP-pullback",
