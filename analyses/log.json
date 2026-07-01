@@ -1,5 +1,22 @@
 [
   {
+    "symbol": "EHGO",
+    "kind": "long_pullback",
+    "label": "VWAP-pullback",
+    "et_time": "2026-07-01 09:50 ET",
+    "date": "2026-07-01",
+    "flagged_ts": 1782913807,
+    "dir": "long",
+    "entry": 2.45,
+    "stop": 2.21,
+    "target": 2.6,
+    "rr": 0.6,
+    "findings": "\ud83d\udcca EHGO \u2014 VWAP-pullback (live TV)\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +86.92%, dip naar VWAP $2.59 en houdt; boven 9 EMA ($2.44), RSI n.v.t. (te weinig bars), volume onbekend.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $2.21 (structuur, n\u00edet op VWAP) \u00b7 DOEL $2.60 \u00b7 R:R ~1:0.6\nKEY: R/G $1.30 \u00b7 PDL $1.12 \u00b7 PDH $2.60 \u23f0 binnen haar power-window (eerste 2u).",
+    "image": "analyses/EHGO_20260701_095007.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "JEM",
     "kind": "fade_short_watch",
     "label": "Fade-short",
