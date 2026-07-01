@@ -284,9 +284,12 @@ def analyses_html():
             gbadge = " <span class='badge bg-dark border border-secondary text-muted'>C</span>"
         else:
             gbadge = ""
+        cvbadge = {"HIGH": " <span class='badge bg-success'>🟢 HIGH</span>",
+                   "MEDIUM": " <span class='badge bg-warning text-dark'>🟡 MED</span>",
+                   "LOW": " <span class='badge bg-danger'>🔴 LOW</span>"}.get(a.get("conviction"), "")
         head = ("<div class='d-flex justify-content-between align-items-center mb-1'>"
                 f"<span><b>{html.escape(a.get('symbol',''))}</b> "
-                f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span>{gbadge}</span>"
+                f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span>{gbadge}{cvbadge}</span>"
                 f"<span class='small text-muted'>{html.escape(a.get('et_time',''))}</span></div>")
         plan = ""
         if a.get("entry"):
