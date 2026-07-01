@@ -4,6 +4,7 @@
     "CANF:short",
     "EHGO:short",
     "JEM:short",
+    "SOC:pullback",
     "TC:short"
   ]
 }
