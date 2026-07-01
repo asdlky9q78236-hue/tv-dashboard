@@ -273,9 +273,20 @@ def analyses_html():
     items = ""
     for a in log[:12]:
         img = html.escape(a.get("image", ""))
+        g = a.get("grade")
+        if g == "A" and a.get("crowned"):
+            gbadge = " <span class='badge bg-warning text-dark'>⭐ A-SETUP</span>"
+        elif g == "A":
+            gbadge = " <span class='badge bg-warning text-dark'>A</span>"
+        elif g == "B":
+            gbadge = " <span class='badge bg-secondary'>B</span>"
+        elif g == "C":
+            gbadge = " <span class='badge bg-dark border border-secondary text-muted'>C</span>"
+        else:
+            gbadge = ""
         head = ("<div class='d-flex justify-content-between align-items-center mb-1'>"
                 f"<span><b>{html.escape(a.get('symbol',''))}</b> "
-                f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span></span>"
+                f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span>{gbadge}</span>"
                 f"<span class='small text-muted'>{html.escape(a.get('et_time',''))}</span></div>")
         plan = ""
         if a.get("entry"):
