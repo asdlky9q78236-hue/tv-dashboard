@@ -4,7 +4,18 @@
     "kind": "fade_short_watch",
     "label": "Fade-short",
     "et_time": "2026-06-30 13:40 ET",
-    "findings": "Fade-short \u2014 gapte +260%, tikte VWAP $4,28 aan, afgewezen en eronder gesloten. Daarna hele sessie onder VWAP = verkopers in control (van ~$4,88 naar ~$3,00).",
-    "image": "analyses/JEM_20260630_154000.png"
+    "date": "2026-06-30",
+    "dir": "short",
+    "entry": 4.28,
+    "stop": 4.6,
+    "target": 3.13,
+    "rr": 2.0,
+    "findings": "\ud83d\udcca JEM \u2014 Fade-short (live TV): tikte VWAP $4,28 aan, afgewezen, hele sessie onder VWAP.",
+    "image": "analyses/JEM_20260630_154000.png",
+    "reviewed": true,
+    "review": {
+      "outcome": "\ud83d\udd34 Fade voltrok zich (intraday ~$4,88 \u2192 $3,00)",
+      "lesson": "VWAP verloren + herhaald falen reclaim = verkopers in control. Postmarket herstel = signalen zijn tijdsgevoelig."
+    }
   }
 ]

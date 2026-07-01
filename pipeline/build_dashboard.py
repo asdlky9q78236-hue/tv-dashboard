@@ -260,29 +260,46 @@ ANALYSES_DIR = ROOT.parent / "analyses"
 
 
 def analyses_html():
-    """Card showing the per-signal VWAP analyses + screenshots (from analyses/log.json)."""
+    """Trading diary: each flagged setup as an entry (plan) + after-the-fact review."""
     try:
         log = json.loads((ANALYSES_DIR / "log.json").read_text(encoding="utf-8"))
     except Exception:
         log = []
     if not log:
         return ""
-    intro = ("<div class='small text-muted mb-2'>Live VWAP-analyses per signaal "
-             "(zelfde als in Telegram). Klik een afbeelding om te vergroten.</div>")
+    intro = ("<div class='small text-muted mb-2'>Elke gesignaleerde setup als "
+             "<b>entry</b> (plan) + <b>achteraf-analyse</b> (doel/stop geraakt, les). "
+             "Klik een afbeelding om te vergroten.</div>")
     items = ""
-    for a in log[:10]:
+    for a in log[:12]:
         img = html.escape(a.get("image", ""))
-        items += (
-            "<div class='border-top border-secondary py-2'>"
-            "<div class='d-flex justify-content-between align-items-center mb-1'>"
-            f"<span><b>{html.escape(a.get('symbol',''))}</b> "
-            f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span></span>"
-            f"<span class='small text-muted'>{html.escape(a.get('et_time',''))}</span></div>"
-            f"<div class='small text-muted mb-1'>{html.escape(a.get('findings',''))}</div>"
-            f"<a href='{img}' target='_blank'><img src='{img}' loading='lazy' "
-            "class='img-fluid rounded border border-secondary'></a></div>")
+        head = ("<div class='d-flex justify-content-between align-items-center mb-1'>"
+                f"<span><b>{html.escape(a.get('symbol',''))}</b> "
+                f"<span class='badge bg-secondary'>{html.escape(a.get('label',''))}</span></span>"
+                f"<span class='small text-muted'>{html.escape(a.get('et_time',''))}</span></div>")
+        plan = ""
+        if a.get("entry"):
+            bits = [f"entry ${a['entry']}"]
+            if a.get("stop"):
+                bits.append(f"stop ${a['stop']}")
+            if a.get("target"):
+                bits.append(f"doel ${a['target']}")
+            if a.get("rr"):
+                bits.append(f"R:R 1:{a['rr']}")
+            plan = f"<div class='small'>📋 <b>Plan:</b> {' · '.join(bits)}</div>"
+        r = a.get("review")
+        if r:
+            rev = (f"<div class='small mt-1'>🔎 <b>Achteraf:</b> {html.escape(r.get('outcome',''))} "
+                   f"<span class='text-muted'>— {html.escape(r.get('lesson',''))}</span></div>")
+        elif a.get("entry"):
+            rev = "<div class='small text-muted mt-1'>🔎 Achteraf-analyse volgt (~45 min)…</div>"
+        else:
+            rev = ""
+        img_html = (f"<a href='{img}' target='_blank'><img src='{img}' loading='lazy' "
+                    "class='img-fluid rounded border border-secondary mt-1'></a>") if img else ""
+        items += f"<div class='border-top border-secondary py-2'>{head}{plan}{rev}{img_html}</div>"
     return ('<div class="col-12"><div class="card bg-dark border-secondary">'
-            '<div class="card-body"><h6 class="text-info mb-3">📸 Mijn analyses</h6>'
+            '<div class="card-body"><h6 class="text-info mb-3">📓 Trading diary</h6>'
             f'{intro}{items}</div></div></div>')
 
 
