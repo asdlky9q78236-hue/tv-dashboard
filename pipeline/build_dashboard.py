@@ -317,6 +317,54 @@ def analyses_html():
             f'{intro}{items}</div></div></div>')
 
 
+def backtest_html():
+    """Edge-tracker: win-rate + expectancy (R) by grade/conviction, over the
+    append-only history (never truncated). Proves whether the strategy has an edge."""
+    recs = C.read_backtest_log()
+    if not recs:
+        return ""
+    st = C.backtest_stats(recs)
+    ov = st["overall"]
+
+    def row(label, s):
+        wr = f"{s['win_rate']}%" if s["win_rate"] is not None else "—"
+        exp = f"{s['expectancy_r']:+}R" if s["expectancy_r"] is not None else "—"
+        return (f"<tr><td>{html.escape(str(label))}</td><td>{s['n']}</td>"
+                f"<td>{s['wins']}/{s['losses']}/{s['scratch']}</td><td>{wr}</td>"
+                f"<td>{exp}</td><td>{s['avg_mfe']}%</td></tr>")
+
+    def table(title, d):
+        rows = "".join(row(k, v) for k, v in d.items() if v["n"])
+        if not rows:
+            return ""
+        return (f"<div class='small text-muted mt-2 mb-1'>{title}</div>"
+                "<table class='table table-sm table-dark table-borderless small mb-0'>"
+                "<thead><tr><th></th><th>n</th><th>W/L/–</th><th>win%</th><th>exp</th>"
+                "<th>gem.MFE</th></tr></thead>"
+                f"<tbody>{rows}</tbody></table>")
+
+    if ov["n"]:
+        wr = ov["win_rate"] if ov["win_rate"] is not None else "—"
+        exp = ov["expectancy_r"] if ov["expectancy_r"] is not None else "—"
+        ov_line = (f"📈 <b>{ov['n']}</b> afgeronde setups · <b>{wr}%</b> win · "
+                   f"expectancy <b>{exp}R</b>")
+    else:
+        ov_line = "📈 nog geen afgeronde trades"
+    intro = ("<div class='small text-muted mb-2'>Bewijst de edge: win-rate + expectancy (R) "
+             "per grade/conviction over álle setups. W/L/– = wins/losses/geen-hit.</div>")
+    kind_lbl = {"long_pullback": "🟢 Long-pullback", "fade_short_watch": "🔴 Fade-short",
+                "long_extended": "🔵 Extended"}
+    kind_tbl = {kind_lbl.get(k, k): v for k, v in st["kind"].items()}
+    body = (f"<div class='mb-1'>{ov_line}</div>{intro}"
+            + table("Per type (long vs fade)", kind_tbl)
+            + table("Per grade", st["grade"])
+            + table("Per conviction", st["conviction"])
+            + table("⭐ A-setup vs overig", st["crowned"]))
+    return ('<div class="col-12"><div class="card bg-dark border-secondary">'
+            '<div class="card-body"><h6 class="text-info mb-2">📈 Backtest / edge-tracker</h6>'
+            f'{body}</div></div></div>')
+
+
 _WB_ORDER = [("long_pullback", "🟢 Pullback", "success"),
              ("fade_short_watch", "🔴 Fade-short", "danger"),
              ("long_extended", "🔵 Extended", "info"),
@@ -388,7 +436,7 @@ def build(public: bool = False, out_path: Path | None = None) -> Path:
     d = _latest("scanner_d")
 
     parts = [watchboard_html(), how_to_read_html(),
-             scanner_a_html(a), scanner_d_html(d), analyses_html(),
+             scanner_a_html(a), scanner_d_html(d), analyses_html(), backtest_html(),
              scanner_b_html(b), scanner_c_html(c)]
     if not public:                       # keep P&L private off the public URL
         parts.append(perf_html())

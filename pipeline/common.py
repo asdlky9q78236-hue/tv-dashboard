@@ -87,6 +87,55 @@ def today_str(now: dt.datetime | None = None) -> str:
     return (now or et_now()).strftime("%Y%m%d")
 
 
+BACKTEST_LOG = ROOT.parent / "analyses" / "backtest_log.jsonl"
+
+
+def read_backtest_log(path: Path | None = None) -> list:
+    """Read the append-only backtest history (one JSON object per line)."""
+    p = path or BACKTEST_LOG
+    recs = []
+    try:
+        for line in p.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line:
+                try:
+                    recs.append(json.loads(line))
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    return recs
+
+
+def backtest_stats(records: list) -> dict:
+    """Aggregate backtest records into edge stats — overall + sliced by grade/
+    conviction/kind/crowned. Win-rate = wins/(wins+losses); expectancy in R
+    (win→+r_win, loss→-1, scratch→0)."""
+    def agg(rs):
+        wins = [r for r in rs if r.get("result") == "win"]
+        losses = [r for r in rs if r.get("result") == "loss"]
+        scratch = [r for r in rs if r.get("result") == "scratch"]
+        decided = len(wins) + len(losses)
+        rmults = ([float(r.get("r_win") or 1.0) for r in wins]
+                  + [-1.0] * len(losses) + [0.0] * len(scratch))
+        used = [r for r in rs if r.get("result") in ("win", "loss", "scratch")]
+        return {
+            "n": len(used), "wins": len(wins), "losses": len(losses), "scratch": len(scratch),
+            "win_rate": round(100 * len(wins) / decided, 1) if decided else None,
+            "expectancy_r": round(sum(rmults) / len(rmults), 2) if rmults else None,
+            "avg_mfe": round(sum(r.get("mfe") or 0 for r in used) / len(used), 1) if used else None,
+        }
+    out = {"overall": agg(records)}
+    for key in ("grade", "conviction", "kind"):
+        buckets = {}
+        for r in records:
+            buckets.setdefault(r.get(key) or "?", []).append(r)
+        out[key] = {k: agg(v) for k, v in sorted(buckets.items())}
+    out["crowned"] = {"⭐ A-setup": agg([r for r in records if r.get("crowned")]),
+                      "overig": agg([r for r in records if not r.get("crowned")])}
+    return out
+
+
 # --------------------------------------------------------------------------
 # Market data
 # --------------------------------------------------------------------------
