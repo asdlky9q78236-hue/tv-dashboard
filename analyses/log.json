@@ -64,8 +64,11 @@
     "rr": 1.7,
     "findings": "\ud83d\udcca SOC \u2014 VWAP-pullback (live TV)\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +32.14%, dip naar VWAP $4.11 en houdt; onder 9 EMA ($4.15), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $3.93 (structuur, n\u00edet op VWAP) \u00b7 DOEL $4.29 \u00b7 R:R ~1:1.7\nKEY: R/G $3.08 \u00b7 PDL $2.88 \u00b7 PDH $4.29 \u23f0 binnen haar power-window (eerste 2u).",
     "image": "analyses/SOC_20260701_095933.png",
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "\u2796 Geen hit (max +4.4% / -2.7%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   },
   {
     "symbol": "EHGO",
@@ -81,8 +84,11 @@
     "rr": 1.4,
     "findings": "\ud83d\udcca EHGO \u2014 Fade-short (live TV)\nSTATUS: onder VWAP \u00b7 verkopers-bias\nNU: small-cap +70.82%, tikte VWAP $2.58 \u2192 afgewezen; onder 9 EMA, RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: short-bias zolang onder VWAP; herhaald falen reclaim = zwak. (Zij is long-biased; short = risico.)\nSTOP $2.96 \u00b7 DOEL $1.12 \u00b7 R:R ~1:1.4\nKEY: R/G $1.30 \u00b7 PDL $1.12 \u00b7 PDH $2.60 \u23f0 binnen haar power-window (eerste 2u).",
     "image": "analyses/EHGO_20260701_095704.png",
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "\u2796 Geen hit (max +5.0% / -3.2%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   },
   {
     "symbol": "TC",
