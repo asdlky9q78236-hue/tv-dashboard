@@ -1,5 +1,26 @@
 [
   {
+    "symbol": "DSY",
+    "kind": "long_pullback",
+    "label": "VWAP-pullback",
+    "et_time": "2026-07-02 10:01 ET",
+    "date": "2026-07-02",
+    "flagged_ts": 1783000913,
+    "dir": "long",
+    "entry": 4.12,
+    "stop": 4.06,
+    "target": 4.68,
+    "rr": 9.3,
+    "grade": "B",
+    "crowned": false,
+    "conviction": "LOW",
+    "catalyst_lean": null,
+    "findings": "\ud83d\udcca DSY \u2014 VWAP-pullback (live TV)\nGRADE B \u2014 degelijk, maar niet mijn eerste keuze. (4/8)\nCONVICTION: \ud83d\udd34 LOW \u2014 sceptisch brein tegen: overslaan.\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +44.62%, dip naar VWAP $4.35 en houdt; onder 9 EMA ($4.20), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $4.06 (structuur, n\u00edet op VWAP) \u00b7 DOEL $4.68 (HOD) \u00b7 R:R ~1:9.3\nKEY: R/G $2.88 \u00b7 PDL $2.62 \u00b7 PDH $2.90 \u23f0 binnen haar power-window (eerste 2u).\n\u23f3 1m: nog onder VWAP \u2014 wacht tot een candle erboven sluit (reclaim).\n\ud83d\udcf0 Catalyst: Trump Bought Hundreds of Stocks the Day Before He Paused Tariffs and Sparked a\n\ud83d\udca7 Liquiditeit ~$208k/5m (matig) \u00b7 limit-order, niet chasen\n\ud83d\udcb0 Sizing (1% v/$25,000 = $250 risico): ~4,166 aandelen \u2248 $17,164 positie\n\ud83c\udfaf Exit (haar 'singles'): 1/3 in doel/HOD \u00b7 trim bij 9-EMA-extensie \u00b7 rest breakeven-stop \u2014 sell into strength, niet chasen\n\ud83e\udde0 Sceptisch brein: volume droogt op \u2192 geen overtuiging; 1\u2026",
+    "image": "analyses/DSY_20260702_100153.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "CETX",
     "kind": "long_pullback",
     "label": "VWAP-pullback",
