@@ -1,5 +1,26 @@
 [
   {
+    "symbol": "NEXA",
+    "kind": "long_pullback",
+    "label": "VWAP-pullback",
+    "et_time": "2026-07-02 10:05 ET",
+    "date": "2026-07-02",
+    "flagged_ts": 1783001110,
+    "dir": "long",
+    "entry": 14.02,
+    "stop": 13.82,
+    "target": 14.35,
+    "rr": 1.7,
+    "grade": "A",
+    "crowned": false,
+    "conviction": "LOW",
+    "catalyst_lean": null,
+    "findings": "\u2139\ufe0f A-kwaliteit \u2014 dag-top-2 al vergeven, dus vandaag als extra test.\n\n\ud83d\udcca NEXA \u2014 VWAP-pullback (live TV)\n\ud83c\udfaf GRADE A \u2014 dit zou ik nemen als ik \u00e9cht handelde. (6/8)\nCONVICTION: \ud83d\udd34 LOW \u2014 sceptisch brein tegen: overslaan.\nSTATUS: Instap-zone \u00b7 boven VWAP\nNU: small-cap +16.4%, dip naar VWAP $13.96 en houdt; boven 9 EMA ($13.96), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $13.82 (structuur, n\u00edet op VWAP) \u00b7 DOEL $14.35 (HOD) \u00b7 R:R ~1:1.7\nKEY: R/G $12.04 \u00b7 PDL $11.58 \u00b7 PDH $12.30 \u23f0 binnen haar power-window (eerste 2u).\n\ud83d\udfe1 1m: boven VWAP maar volume mager \u2014 wacht op sterke reclaim-candle.\n\ud83d\udcf0 Catalyst: Is Nexa Resources (NEXA) One of the Best Cheap Small Cap Stocks to Buy Now?\n\ud83d\udca7 Liquiditeit ~$59k/5m (dun) \u00b7 limit-order, niet chasen\n\ud83d\udcb0 Sizing (1% v/$25,000 = $250 risico): ~1,250 aandelen \u2248 $17,525 positie\n\ud83c\udfaf Exit (haar 'singles'): 1/3 in doel/HOD \u00b7 trim bij 9-EMA-extensie \u00b7 rest breakeven-stop \u2014 sell into strengt\u2026",
+    "image": "analyses/NEXA_20260702_100510.png",
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "DSY",
     "kind": "long_pullback",
     "label": "VWAP-pullback",
