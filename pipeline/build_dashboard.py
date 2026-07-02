@@ -323,7 +323,9 @@ def backtest_html():
     recs = C.read_backtest_log()
     if not recs:
         return ""
-    st = C.backtest_stats(recs)
+    real = [r for r in recs if not r.get("shadow")]
+    shadow = [r for r in recs if r.get("shadow")]
+    st = C.backtest_stats(real)
     ov = st["overall"]
 
     def row(label, s):
@@ -355,11 +357,21 @@ def backtest_html():
     kind_lbl = {"long_pullback": "🟢 Long-pullback", "fade_short_watch": "🔴 Fade-short",
                 "long_extended": "🔵 Extended"}
     kind_tbl = {kind_lbl.get(k, k): v for k, v in st["kind"].items()}
+    shadow_line = ""
+    if shadow:
+        ss = C.backtest_stats(shadow)["overall"]
+        wr = ss["win_rate"] if ss["win_rate"] is not None else "—"
+        ex = ss["expectancy_r"] if ss["expectancy_r"] is not None else "—"
+        shadow_line = ("<div class='small text-muted mt-2 border-top border-secondary pt-2'>"
+                       "🔬 <b>Fades (data-only, niet getraded)</b> — valideert de fade-ban: "
+                       f"n={ss['n']} · win {wr}% · exp {ex}R · "
+                       f"W/L/– {ss['wins']}/{ss['losses']}/{ss['scratch']}</div>")
     body = (f"<div class='mb-1'>{ov_line}</div>{intro}"
             + table("Per type (long vs fade)", kind_tbl)
             + table("Per grade", st["grade"])
             + table("Per conviction", st["conviction"])
-            + table("⭐ A-setup vs overig", st["crowned"]))
+            + table("⭐ A-setup vs overig", st["crowned"])
+            + shadow_line)
     return ('<div class="col-12"><div class="card bg-dark border-secondary">'
             '<div class="card-body"><h6 class="text-info mb-2">📈 Backtest / edge-tracker</h6>'
             f'{body}</div></div></div>')
