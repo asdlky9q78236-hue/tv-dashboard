@@ -59,8 +59,14 @@
     "catalyst_lean": null,
     "findings": "\ud83d\udcca CETX \u2014 VWAP-pullback (live TV)\nGRADE B \u2014 degelijk, maar niet mijn eerste keuze. (4/8)\nCONVICTION: \ud83d\udd34 LOW \u2014 sceptisch brein tegen: overslaan.\nSTATUS: Instap-zone \u00b7 onder VWAP\nNU: small-cap +22.02%, dip naar VWAP $3.60 en houdt; onder 9 EMA ($3.43), RSI n.v.t. (te weinig bars), afnemend volume.\nACTIE: koop de dip-zone bij VWAP; scale-in 2-4\u00d7; bevestiging = reclaim+hold + volume. Niet de top najagen.\nSTOP $3.25 (structuur, n\u00edet op VWAP) \u00b7 DOEL $4.05 (HOD) \u00b7 R:R ~1:4.3\nKEY: R/G $2.80 \u00b7 PDL $2.71 \u00b7 PDH $3.25 \u23f0 binnen haar power-window (eerste 2u).\n\u23f3 1m: nog onder VWAP \u2014 wacht tot een candle erboven sluit (reclaim).\n\ud83d\udcf0 Catalyst: Cemtrex Completes Acquisition of Plant Engineering Services, Adding Specialize \u00b7 [M&A]\n\ud83d\udca7 Liquiditeit ~$217k/5m (matig) \u00b7 limit-order, niet chasen\n\ud83d\udcb0 Sizing (1% v/$25,000 = $250 risico): ~1,666 aandelen \u2248 $5,664 positie\n\ud83c\udfaf Exit (haar 'singles'): 1/3 in doel/HOD \u00b7 trim bij 9-EMA-extensie \u00b7 rest breakeven-stop \u2014 sell into strength, niet chasen\n\ud83e\udde0 Sceptisch brein: volume droogt op \u2192 geen overtu\u2026",
     "image": "analyses/CETX_20260702_095846.png",
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 12.9,
+      "mae": -3.5,
+      "result": "scratch",
+      "outcome": "\u2796 Geen hit (max +12.9% / -3.5%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   },
   {
     "symbol": "SOC",
