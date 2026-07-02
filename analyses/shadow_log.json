@@ -1,5 +1,25 @@
 [
   {
+    "symbol": "DSY",
+    "kind": "fade_short_watch",
+    "label": "Fade-short",
+    "et_time": "2026-07-02 15:12 ET",
+    "date": "2026-07-02",
+    "flagged_ts": 1783019576,
+    "dir": "short",
+    "entry": 4.16,
+    "stop": 4.24,
+    "target": 4.0,
+    "rr": 2.0,
+    "grade": null,
+    "conviction": null,
+    "crowned": false,
+    "catalyst_lean": null,
+    "data_only": true,
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "TENX",
     "kind": "fade_short_watch",
     "label": "Fade-short",
