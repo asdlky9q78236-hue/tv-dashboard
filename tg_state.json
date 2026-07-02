@@ -1,10 +1,4 @@
 {
-  "date": "2026-07-01",
-  "alerted": [
-    "CANF:short",
-    "EHGO:short",
-    "JEM:short",
-    "SOC:pullback",
-    "TC:short"
-  ]
+  "date": "2026-07-02",
+  "alerted": []
 }
