@@ -16,8 +16,15 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 1.7,
+      "mae": -3.4,
+      "result": "loss",
+      "pct": -1.9,
+      "outcome": "\ud83d\uded1 Stop geraakt (-1.9%)",
+      "lesson": "Invalidatie (VWAP/structuur niet gehouden). Stop gerespecteerd = discipline; kleine controleerbare loss."
+    }
   },
   {
     "symbol": "TENX",
