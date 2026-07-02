@@ -16,8 +16,15 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 0.0,
+      "mae": -4.1,
+      "result": "loss",
+      "pct": -3.9,
+      "outcome": "\ud83d\uded1 Stop geraakt (-3.9%)",
+      "lesson": "Invalidatie (VWAP/structuur niet gehouden). Stop gerespecteerd = discipline; kleine controleerbare loss."
+    }
   },
   {
     "symbol": "CETX",
@@ -36,8 +43,14 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 5.0,
+      "mae": -2.7,
+      "result": "scratch",
+      "outcome": "\u2796 Geen hit (max +5.0% / -2.7%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   },
   {
     "symbol": "USDE",
@@ -56,7 +69,13 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 11.0,
+      "mae": -2.8,
+      "result": "scratch",
+      "outcome": "\u2796 Geen hit (max +11.0% / -2.8%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   }
 ]
