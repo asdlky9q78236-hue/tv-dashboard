@@ -1,14 +1,7 @@
 {
-  "date": "2026-07-02",
+  "date": "2026-07-03",
   "alerted": [
-    "CETX:short",
-    "DSY:pullback",
     "DSY:short",
-    "NEXA:short",
-    "PPCB:short",
-    "SDOT:short",
-    "TENX:pullback",
-    "TENX:short",
     "USDE:short"
   ]
 }
