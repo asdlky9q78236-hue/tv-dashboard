@@ -1,6 +1,7 @@
 {
   "date": "2026-07-07",
   "alerted": [
+    "EDHL:pullback",
     "TDIC:short",
     "TDTH:short"
   ]
