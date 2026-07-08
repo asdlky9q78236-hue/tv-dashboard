@@ -4,6 +4,7 @@
     "BZH:ext",
     "IOTR:pullback",
     "IOTR:short",
+    "KC:pullback",
     "KC:short",
     "TC:short"
   ]
