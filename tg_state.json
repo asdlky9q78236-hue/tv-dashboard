@@ -2,6 +2,7 @@
   "date": "2026-07-08",
   "alerted": [
     "BZH:ext",
+    "BZH:short",
     "IOTR:pullback",
     "IOTR:short",
     "KC:pullback",
