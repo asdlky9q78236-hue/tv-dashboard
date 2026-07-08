@@ -3,6 +3,8 @@
   "alerted": [
     "BZH:ext",
     "IOTR:pullback",
-    "KC:short"
+    "IOTR:short",
+    "KC:short",
+    "TC:short"
   ]
 }
