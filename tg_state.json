@@ -1,10 +1,4 @@
 {
-  "date": "2026-07-07",
-  "alerted": [
-    "EDHL:pullback",
-    "EDHL:short",
-    "SKYQ:pullback",
-    "TDIC:short",
-    "TDTH:short"
-  ]
+  "date": "2026-07-08",
+  "alerted": []
 }
