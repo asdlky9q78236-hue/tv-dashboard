@@ -3,6 +3,7 @@
   "alerted": [
     "IOTR:short",
     "RPGL:short",
-    "VRAX:pullback"
+    "VRAX:pullback",
+    "VRAX:short"
   ]
 }
