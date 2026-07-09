@@ -1,4 +1,8 @@
 {
   "date": "2026-07-09",
-  "alerted": []
+  "alerted": [
+    "IOTR:short",
+    "RPGL:short",
+    "VRAX:pullback"
+  ]
 }
