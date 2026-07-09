@@ -1,13 +1,4 @@
 {
-  "date": "2026-07-08",
-  "alerted": [
-    "BZH:ext",
-    "BZH:short",
-    "IOTR:pullback",
-    "IOTR:short",
-    "KC:pullback",
-    "KC:short",
-    "SKYQ:short",
-    "TC:short"
-  ]
+  "date": "2026-07-09",
+  "alerted": []
 }
