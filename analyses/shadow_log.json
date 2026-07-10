@@ -36,8 +36,15 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 9.1,
+      "mae": -9.5,
+      "result": "loss",
+      "pct": -6.6,
+      "outcome": "\ud83d\uded1 Stop geraakt (-6.6%)",
+      "lesson": "Invalidatie (VWAP/structuur niet gehouden). Stop gerespecteerd = discipline; kleine controleerbare loss."
+    }
   },
   {
     "symbol": "CRE",
