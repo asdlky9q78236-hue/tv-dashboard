@@ -2,8 +2,10 @@
   "date": "2026-07-10",
   "alerted": [
     "CRE:short",
+    "EQPT:pullback",
     "GMM:short",
     "JZXN:ext",
+    "JZXN:short",
     "WDFC:short",
     "WNW:short",
     "WOK:short"
