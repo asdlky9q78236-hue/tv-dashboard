@@ -3,11 +3,13 @@
   "alerted": [
     "CRE:short",
     "EQPT:pullback",
+    "EQPT:short",
     "GMM:short",
     "JZXN:ext",
     "JZXN:short",
     "WDFC:short",
     "WNW:short",
-    "WOK:short"
+    "WOK:short",
+    "YMAT:short"
   ]
 }
