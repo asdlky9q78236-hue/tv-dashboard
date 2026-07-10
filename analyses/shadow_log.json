@@ -36,8 +36,14 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 2.0,
+      "mae": -1.3,
+      "result": "scratch",
+      "outcome": "\u2796 Geen hit (max +2.0% / -1.3%)",
+      "lesson": "Geen follow-through \u2014 mogelijk overextended of laag volume. Niet forceren; wachten op betere setup."
+    }
   },
   {
     "symbol": "JZXN",
