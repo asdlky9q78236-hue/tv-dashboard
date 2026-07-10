@@ -1,11 +1,4 @@
 {
-  "date": "2026-07-09",
-  "alerted": [
-    "IOTR:pullback",
-    "IOTR:short",
-    "RPGL:short",
-    "SDOT:short",
-    "VRAX:pullback",
-    "VRAX:short"
-  ]
+  "date": "2026-07-10",
+  "alerted": []
 }
