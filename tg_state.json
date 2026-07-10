@@ -1,6 +1,7 @@
 {
   "date": "2026-07-10",
   "alerted": [
+    "CRE:pullback",
     "CRE:short",
     "EQPT:pullback",
     "EQPT:short",
