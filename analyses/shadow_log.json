@@ -16,8 +16,12 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "geen koersdata",
+      "result": "no_data",
+      "lesson": ""
+    }
   },
   {
     "symbol": "WNW",
@@ -36,8 +40,12 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "geen koersdata",
+      "result": "no_data",
+      "lesson": ""
+    }
   },
   {
     "symbol": "WDFC",
@@ -56,8 +64,12 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "geen koersdata",
+      "result": "no_data",
+      "lesson": ""
+    }
   },
   {
     "symbol": "WOK",
@@ -76,8 +88,12 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "geen koersdata",
+      "result": "no_data",
+      "lesson": ""
+    }
   },
   {
     "symbol": "GMM",
@@ -96,8 +112,12 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "outcome": "geen koersdata",
+      "result": "no_data",
+      "lesson": ""
+    }
   },
   {
     "symbol": "IOTR",
