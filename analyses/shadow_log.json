@@ -16,8 +16,15 @@
     "crowned": false,
     "catalyst_lean": null,
     "data_only": true,
-    "reviewed": false,
-    "review": null
+    "reviewed": true,
+    "review": {
+      "mfe": 1.5,
+      "mae": -11.9,
+      "result": "loss",
+      "pct": -2.8,
+      "outcome": "\ud83d\uded1 Stop geraakt (-2.8%)",
+      "lesson": "Invalidatie (VWAP/structuur niet gehouden). Stop gerespecteerd = discipline; kleine controleerbare loss."
+    }
   },
   {
     "symbol": "EQPT",
