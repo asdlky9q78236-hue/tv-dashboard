@@ -1,5 +1,25 @@
 [
   {
+    "symbol": "YMAT",
+    "kind": "fade_short_watch",
+    "label": "Fade-short",
+    "et_time": "2026-07-10 11:52 ET",
+    "date": "2026-07-10",
+    "flagged_ts": 1783698742,
+    "dir": "short",
+    "entry": 2.52,
+    "stop": 2.59,
+    "target": 2.38,
+    "rr": 2.0,
+    "grade": null,
+    "conviction": null,
+    "crowned": false,
+    "catalyst_lean": null,
+    "data_only": true,
+    "reviewed": false,
+    "review": null
+  },
+  {
     "symbol": "EQPT",
     "kind": "fade_short_watch",
     "label": "Fade-short",
