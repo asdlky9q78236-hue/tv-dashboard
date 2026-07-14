@@ -1,11 +1,4 @@
 {
-  "date": "2026-07-13",
-  "alerted": [
-    "AGEN:short",
-    "EHGO:pullback",
-    "MIMI:short",
-    "PLSM:short",
-    "VEEE:ext",
-    "VEEE:short"
-  ]
+  "date": "2026-07-14",
+  "alerted": []
 }
