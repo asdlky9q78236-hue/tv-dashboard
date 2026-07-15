@@ -2,6 +2,7 @@
   "date": "2026-07-15",
   "alerted": [
     "AEHR:short",
+    "ELVA:pullback",
     "ELVA:short",
     "ERNA:short",
     "TRT:short"
