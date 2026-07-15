@@ -1,13 +1,4 @@
 {
-  "date": "2026-07-14",
-  "alerted": [
-    "CLSK:short",
-    "GFUZ:pullback",
-    "GFUZ:short",
-    "NXTC:short",
-    "SHPH:short",
-    "TSEM:pullback",
-    "TSEM:short",
-    "UBXG:short"
-  ]
+  "date": "2026-07-15",
+  "alerted": []
 }
