@@ -1,11 +1,4 @@
 {
-  "date": "2026-07-15",
-  "alerted": [
-    "AEHR:short",
-    "ELVA:pullback",
-    "ELVA:short",
-    "ERNA:short",
-    "NVVE:short",
-    "TRT:short"
-  ]
+  "date": "2026-07-16",
+  "alerted": []
 }
