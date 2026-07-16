@@ -1,6 +1,9 @@
 {
   "date": "2026-07-16",
   "alerted": [
-    "DXST:pullback"
+    "DXST:pullback",
+    "DXST:short",
+    "MAN:ext",
+    "VEEE:short"
   ]
 }
