@@ -2,6 +2,7 @@
   "date": "2026-07-17",
   "alerted": [
     "BIYA:short",
+    "DCBO:pullback",
     "DCBO:short",
     "JLHL:short",
     "PMAX:short",
