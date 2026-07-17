@@ -1,4 +1,9 @@
 {
   "date": "2026-07-17",
-  "alerted": []
+  "alerted": [
+    "JLHL:short",
+    "PMAX:short",
+    "SDOT:short",
+    "VEEE:short"
+  ]
 }
