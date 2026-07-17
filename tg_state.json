@@ -7,6 +7,7 @@
     "PMAX:short",
     "SDOT:short",
     "SG:ext",
+    "SG:pullback",
     "VEEE:short"
   ]
 }
