@@ -2,9 +2,11 @@
   "date": "2026-07-17",
   "alerted": [
     "BIYA:short",
+    "DCBO:short",
     "JLHL:short",
     "PMAX:short",
     "SDOT:short",
+    "SG:ext",
     "VEEE:short"
   ]
 }
