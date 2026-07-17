@@ -1,10 +1,4 @@
 {
-  "date": "2026-07-16",
-  "alerted": [
-    "ATAI:pullback",
-    "DXST:pullback",
-    "DXST:short",
-    "MAN:ext",
-    "VEEE:short"
-  ]
+  "date": "2026-07-17",
+  "alerted": []
 }
