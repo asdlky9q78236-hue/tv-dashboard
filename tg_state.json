@@ -1,15 +1,4 @@
 {
-  "date": "2026-07-17",
-  "alerted": [
-    "BIYA:short",
-    "DCBO:pullback",
-    "DCBO:short",
-    "JLHL:short",
-    "PMAX:short",
-    "SDOT:short",
-    "SG:ext",
-    "SG:pullback",
-    "SG:short",
-    "VEEE:short"
-  ]
+  "date": "2026-07-20",
+  "alerted": []
 }
