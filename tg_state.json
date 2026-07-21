@@ -1,14 +1,4 @@
 {
-  "date": "2026-07-20",
-  "alerted": [
-    "ADVB:pullback",
-    "ADVB:short",
-    "AMC:short",
-    "BIYA:short",
-    "BXBL:short",
-    "GORO:pullback",
-    "GORO:short",
-    "HUT:short",
-    "SDOT:short"
-  ]
+  "date": "2026-07-21",
+  "alerted": []
 }
