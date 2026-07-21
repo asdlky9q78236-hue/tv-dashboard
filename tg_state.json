@@ -4,8 +4,10 @@
     "CRNT:short",
     "FWRD:short",
     "PKE:pullback",
+    "PKE:short",
     "SNDK:ext",
     "SNDK:short",
+    "UTZ:ext",
     "VIVK:short"
   ]
 }
