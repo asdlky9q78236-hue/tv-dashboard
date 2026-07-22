@@ -7,6 +7,7 @@
     "INLF:short",
     "INM:short",
     "LABT:short",
-    "ZCMD:ext"
+    "ZCMD:ext",
+    "ZCMD:short"
   ]
 }
