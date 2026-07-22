@@ -1,6 +1,8 @@
 {
   "date": "2026-07-22",
   "alerted": [
+    "ADVB:short",
+    "ARWR:short",
     "INM:short",
     "LABT:short",
     "ZCMD:ext"
