@@ -1,4 +1,8 @@
 {
   "date": "2026-07-22",
-  "alerted": []
+  "alerted": [
+    "INM:short",
+    "LABT:short",
+    "ZCMD:ext"
+  ]
 }
