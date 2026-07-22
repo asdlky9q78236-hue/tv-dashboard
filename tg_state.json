@@ -1,16 +1,4 @@
 {
-  "date": "2026-07-21",
-  "alerted": [
-    "AEHR:ext",
-    "CBIO:pullback",
-    "CRNT:short",
-    "FWRD:pullback",
-    "FWRD:short",
-    "PKE:pullback",
-    "PKE:short",
-    "SNDK:ext",
-    "SNDK:short",
-    "UTZ:ext",
-    "VIVK:short"
-  ]
+  "date": "2026-07-22",
+  "alerted": []
 }
