@@ -2,6 +2,7 @@
   "date": "2026-07-22",
   "alerted": [
     "ADVB:short",
+    "ARWR:pullback",
     "ARWR:short",
     "INLF:short",
     "INM:short",
