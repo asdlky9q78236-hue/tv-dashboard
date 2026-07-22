@@ -3,6 +3,7 @@
   "alerted": [
     "ADVB:short",
     "ARWR:short",
+    "INLF:short",
     "INM:short",
     "LABT:short",
     "ZCMD:ext"
