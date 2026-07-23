@@ -6,6 +6,7 @@
     "EHGO:short",
     "JEM:short",
     "MEDP:short",
+    "NVEC:ext",
     "NVEC:short"
   ]
 }
