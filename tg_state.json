@@ -1,12 +1,4 @@
 {
-  "date": "2026-07-23",
-  "alerted": [
-    "ADVB:short",
-    "DOMO:short",
-    "EHGO:short",
-    "JEM:short",
-    "MEDP:short",
-    "NVEC:ext",
-    "NVEC:short"
-  ]
+  "date": "2026-07-24",
+  "alerted": []
 }
