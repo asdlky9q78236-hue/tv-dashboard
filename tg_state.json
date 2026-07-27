@@ -1,11 +1,4 @@
 {
-  "date": "2026-07-24",
-  "alerted": [
-    "ADVB:short",
-    "AKAN:short",
-    "JEM:short",
-    "THC:pullback",
-    "THC:short",
-    "VIVK:short"
-  ]
+  "date": "2026-07-27",
+  "alerted": []
 }
