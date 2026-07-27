@@ -1,6 +1,7 @@
 {
   "date": "2026-07-27",
   "alerted": [
+    "BIYA:pullback",
     "BIYA:short",
     "EDBL:short",
     "TRAX:short"
