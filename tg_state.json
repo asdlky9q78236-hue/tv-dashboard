@@ -1,4 +1,9 @@
 {
   "date": "2026-07-28",
-  "alerted": []
+  "alerted": [
+    "BIYA:short",
+    "DFNS:ext",
+    "FIRY:short",
+    "LVWR:short"
+  ]
 }
