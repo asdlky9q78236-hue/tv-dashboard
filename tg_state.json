@@ -5,7 +5,9 @@
     "DFNS:ext",
     "FIRY:short",
     "INLF:ext",
+    "INLF:short",
     "LVWR:short",
+    "PRLD:pullback",
     "PRLD:short"
   ]
 }
