@@ -2,6 +2,7 @@
   "date": "2026-07-29",
   "alerted": [
     "AMIX:short",
+    "DFNS:ext",
     "DFNS:short",
     "GMM:short",
     "NCRA:short",
