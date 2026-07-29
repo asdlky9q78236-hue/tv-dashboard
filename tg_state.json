@@ -1,4 +1,11 @@
 {
   "date": "2026-07-29",
-  "alerted": []
+  "alerted": [
+    "AMIX:short",
+    "DFNS:short",
+    "GMM:short",
+    "NCRA:short",
+    "VIVK:short",
+    "VRRM:short"
+  ]
 }
