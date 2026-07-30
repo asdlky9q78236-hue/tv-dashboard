@@ -3,6 +3,7 @@
   "alerted": [
     "CMCO:ext",
     "CMCO:pullback",
+    "DFNS:pullback",
     "DFNS:short",
     "NUWE:short",
     "PN:short",
