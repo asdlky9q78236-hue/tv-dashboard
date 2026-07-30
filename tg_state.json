@@ -1,6 +1,7 @@
 {
   "date": "2026-07-30",
   "alerted": [
+    "CMCO:ext",
     "DFNS:short",
     "NUWE:short",
     "PN:short",
