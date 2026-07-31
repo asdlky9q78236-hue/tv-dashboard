@@ -1,6 +1,7 @@
 {
   "date": "2026-07-31",
   "alerted": [
+    "AXTI:pullback",
     "AXTI:short",
     "COHU:short",
     "FCUV:short",
