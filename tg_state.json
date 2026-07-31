@@ -6,6 +6,7 @@
     "FCUV:short",
     "NWL:short",
     "PWP:pullback",
+    "PWP:short",
     "REPL:short"
   ]
 }
