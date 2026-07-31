@@ -1,12 +1,4 @@
 {
-  "date": "2026-07-30",
-  "alerted": [
-    "CMCO:ext",
-    "CMCO:pullback",
-    "DFNS:pullback",
-    "DFNS:short",
-    "NUWE:short",
-    "PN:short",
-    "STKH:short"
-  ]
+  "date": "2026-07-31",
+  "alerted": []
 }
