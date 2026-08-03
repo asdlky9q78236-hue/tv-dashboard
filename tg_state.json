@@ -2,6 +2,7 @@
   "date": "2026-08-03",
   "alerted": [
     "DFNS:short",
+    "FCUV:short",
     "UPC:short"
   ]
 }
