@@ -1,4 +1,7 @@
 {
   "date": "2026-08-03",
-  "alerted": []
+  "alerted": [
+    "DFNS:short",
+    "UPC:short"
+  ]
 }
