@@ -1,13 +1,4 @@
 {
-  "date": "2026-07-31",
-  "alerted": [
-    "AXTI:pullback",
-    "AXTI:short",
-    "COHU:short",
-    "FCUV:short",
-    "NWL:short",
-    "PWP:pullback",
-    "PWP:short",
-    "REPL:short"
-  ]
+  "date": "2026-08-03",
+  "alerted": []
 }
