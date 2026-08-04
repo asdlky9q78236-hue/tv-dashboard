@@ -2,6 +2,7 @@
   "date": "2026-08-04",
   "alerted": [
     "AMIX:short",
+    "AMRC:pullback",
     "AMRC:short",
     "BLZE:short",
     "DXST:pullback",
