@@ -5,6 +5,7 @@
     "AMRC:short",
     "BLZE:short",
     "DXST:short",
-    "IBTA:short"
+    "IBTA:short",
+    "MED:ext"
   ]
 }
