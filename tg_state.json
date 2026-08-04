@@ -1,11 +1,4 @@
 {
-  "date": "2026-08-03",
-  "alerted": [
-    "ATKR:ext",
-    "DFNS:ext",
-    "DFNS:short",
-    "EZRA:short",
-    "FCUV:short",
-    "UPC:short"
-  ]
+  "date": "2026-08-04",
+  "alerted": []
 }
