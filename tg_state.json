@@ -1,4 +1,9 @@
 {
   "date": "2026-08-04",
-  "alerted": []
+  "alerted": [
+    "AMIX:short",
+    "AMRC:short",
+    "DXST:short",
+    "IBTA:short"
+  ]
 }
