@@ -1,14 +1,4 @@
 {
-  "date": "2026-08-04",
-  "alerted": [
-    "AMIX:short",
-    "AMRC:pullback",
-    "AMRC:short",
-    "BLZE:short",
-    "DXST:pullback",
-    "DXST:short",
-    "IBTA:pullback",
-    "IBTA:short",
-    "MED:ext"
-  ]
+  "date": "2026-08-05",
+  "alerted": []
 }
