@@ -1,4 +1,8 @@
 {
   "date": "2026-08-05",
-  "alerted": []
+  "alerted": [
+    "BLMN:short",
+    "INLF:short",
+    "JLHL:ext"
+  ]
 }
