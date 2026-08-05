@@ -1,7 +1,9 @@
 {
   "date": "2026-08-05",
   "alerted": [
+    "APPS:short",
     "BLMN:short",
+    "GTE:short",
     "INLF:short",
     "JLHL:ext"
   ]
