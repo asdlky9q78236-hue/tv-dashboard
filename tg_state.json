@@ -1,4 +1,10 @@
 {
   "date": "2026-08-06",
-  "alerted": []
+  "alerted": [
+    "CLRO:short",
+    "EVH:short",
+    "IOVA:pullback",
+    "PAVS:short",
+    "WYHG:ext"
+  ]
 }
