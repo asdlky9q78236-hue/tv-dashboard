@@ -1,12 +1,4 @@
 {
-  "date": "2026-08-05",
-  "alerted": [
-    "APPS:short",
-    "BLMN:pullback",
-    "BLMN:short",
-    "GTE:short",
-    "INLF:short",
-    "JLHL:ext",
-    "JLHL:short"
-  ]
+  "date": "2026-08-06",
+  "alerted": []
 }
