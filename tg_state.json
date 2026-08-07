@@ -1,14 +1,4 @@
 {
-  "date": "2026-08-06",
-  "alerted": [
-    "ASPN:pullback",
-    "ASPN:short",
-    "CLRO:short",
-    "EVH:pullback",
-    "EVH:short",
-    "IOVA:pullback",
-    "IOVA:short",
-    "PAVS:short",
-    "WYHG:ext"
-  ]
+  "date": "2026-08-07",
+  "alerted": []
 }
