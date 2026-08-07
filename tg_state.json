@@ -6,6 +6,7 @@
     "FIGS:short",
     "FNKO:short",
     "NAMI:short",
-    "QNST:ext"
+    "QNST:ext",
+    "QNST:pullback"
   ]
 }
