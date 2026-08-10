@@ -1,12 +1,4 @@
 {
-  "date": "2026-08-07",
-  "alerted": [
-    "DOCS:short",
-    "DSY:short",
-    "FIGS:short",
-    "FNKO:short",
-    "NAMI:short",
-    "QNST:ext",
-    "QNST:pullback"
-  ]
+  "date": "2026-08-10",
+  "alerted": []
 }
