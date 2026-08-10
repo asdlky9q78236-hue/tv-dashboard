@@ -1,6 +1,8 @@
 {
   "date": "2026-08-10",
   "alerted": [
+    "SCKT:short",
+    "XHLD:short",
     "ZJYL:short"
   ]
 }
