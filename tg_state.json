@@ -3,7 +3,9 @@
   "alerted": [
     "BW:short",
     "ELPW:short",
+    "FF:short",
     "STIM:ext",
+    "STIM:short",
     "WXM:short",
     "WYHG:short"
   ]
