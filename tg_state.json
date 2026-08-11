@@ -1,10 +1,4 @@
 {
-  "date": "2026-08-10",
-  "alerted": [
-    "SCKT:short",
-    "STKH:short",
-    "XHLD:short",
-    "ZJYL:pullback",
-    "ZJYL:short"
-  ]
+  "date": "2026-08-11",
+  "alerted": []
 }
