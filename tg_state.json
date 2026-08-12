@@ -1,13 +1,4 @@
 {
-  "date": "2026-08-11",
-  "alerted": [
-    "BW:short",
-    "ELPW:short",
-    "FF:short",
-    "PLAG:ext",
-    "STIM:ext",
-    "STIM:short",
-    "WXM:short",
-    "WYHG:short"
-  ]
+  "date": "2026-08-12",
+  "alerted": []
 }
