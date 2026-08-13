@@ -1,4 +1,7 @@
 {
   "date": "2026-08-13",
-  "alerted": []
+  "alerted": [
+    "HLIT:short",
+    "OMER:short"
+  ]
 }
