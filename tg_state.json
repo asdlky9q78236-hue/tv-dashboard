@@ -1,6 +1,8 @@
 {
   "date": "2026-08-13",
   "alerted": [
+    "BIRK:pullback",
+    "CRMD:short",
     "HLIT:short",
     "OMER:short"
   ]
