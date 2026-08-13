@@ -1,14 +1,4 @@
 {
-  "date": "2026-08-12",
-  "alerted": [
-    "AII:short",
-    "BOXL:short",
-    "CRWV:pullback",
-    "CRWV:short",
-    "HYLN:short",
-    "OFAL:ext",
-    "OFAL:short",
-    "OWLT:short",
-    "VELO:short"
-  ]
+  "date": "2026-08-13",
+  "alerted": []
 }
