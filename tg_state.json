@@ -1,4 +1,10 @@
 {
   "date": "2026-08-14",
-  "alerted": []
+  "alerted": [
+    "AKAN:short",
+    "CAPR:short",
+    "CGTL:short",
+    "STKH:short",
+    "SXTC:short"
+  ]
 }
