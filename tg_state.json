@@ -1,11 +1,4 @@
 {
-  "date": "2026-08-13",
-  "alerted": [
-    "BIRK:pullback",
-    "BIRK:short",
-    "CRMD:short",
-    "CURI:short",
-    "HLIT:short",
-    "OMER:short"
-  ]
+  "date": "2026-08-14",
+  "alerted": []
 }
