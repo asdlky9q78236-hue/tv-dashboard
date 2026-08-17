@@ -6,6 +6,7 @@
     "OABI:short",
     "SLE:pullback",
     "SLE:short",
-    "XPON:pullback"
+    "XPON:pullback",
+    "XPON:short"
   ]
 }
