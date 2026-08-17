@@ -1,4 +1,8 @@
 {
   "date": "2026-08-17",
-  "alerted": []
+  "alerted": [
+    "JLHL:short",
+    "SLE:short",
+    "XPON:pullback"
+  ]
 }
