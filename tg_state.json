@@ -1,7 +1,10 @@
 {
   "date": "2026-08-17",
   "alerted": [
+    "IVF:short",
     "JLHL:short",
+    "OABI:short",
+    "SLE:pullback",
     "SLE:short",
     "XPON:pullback"
   ]
