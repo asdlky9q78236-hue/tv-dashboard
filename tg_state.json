@@ -1,6 +1,7 @@
 {
   "date": "2026-08-17",
   "alerted": [
+    "FIEE:short",
     "IVF:short",
     "JLHL:short",
     "OABI:short",
