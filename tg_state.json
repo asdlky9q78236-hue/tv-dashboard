@@ -1,8 +1,11 @@
 {
   "date": "2026-08-18",
   "alerted": [
+    "AMLX:ext",
     "PFSA:ext",
+    "PFSA:pullback",
     "PFSA:short",
+    "SGLY:pullback",
     "SGLY:short",
     "SLE:short",
     "WETO:short",
