@@ -2,6 +2,7 @@
   "date": "2026-08-18",
   "alerted": [
     "PFSA:ext",
+    "PFSA:short",
     "SGLY:short",
     "SLE:short",
     "WETO:short",
