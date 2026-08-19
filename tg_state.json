@@ -1,4 +1,9 @@
 {
   "date": "2026-08-19",
-  "alerted": []
+  "alerted": [
+    "EHGO:short",
+    "FEMY:short",
+    "TNON:short",
+    "YJ:short"
+  ]
 }
