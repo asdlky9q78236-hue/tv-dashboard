@@ -2,6 +2,7 @@
   "date": "2026-08-21",
   "alerted": [
     "ABUS:pullback",
+    "ABUS:short",
     "BIVI:short",
     "BRNX:short",
     "JUNS:short",
