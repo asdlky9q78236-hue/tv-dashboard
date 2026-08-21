@@ -3,6 +3,8 @@
   "alerted": [
     "BIVI:short",
     "BRNX:short",
-    "SUGP:short"
+    "JUNS:short",
+    "SUGP:short",
+    "USDE:ext"
   ]
 }
