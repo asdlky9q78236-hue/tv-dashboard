@@ -3,6 +3,7 @@
   "alerted": [
     "ABUS:pullback",
     "ABUS:short",
+    "ASST:short",
     "BIVI:short",
     "BRNX:short",
     "JUNS:short",
