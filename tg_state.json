@@ -2,6 +2,7 @@
   "date": "2026-08-21",
   "alerted": [
     "BIVI:short",
-    "BRNX:short"
+    "BRNX:short",
+    "SUGP:short"
   ]
 }
