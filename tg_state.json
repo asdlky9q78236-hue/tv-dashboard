@@ -1,4 +1,9 @@
 {
   "date": "2026-08-24",
-  "alerted": []
+  "alerted": [
+    "CAPR:short",
+    "DAIC:ext",
+    "NSSC:short",
+    "XPON:short"
+  ]
 }
