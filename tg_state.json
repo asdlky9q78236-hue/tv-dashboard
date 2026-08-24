@@ -1,9 +1,11 @@
 {
   "date": "2026-08-24",
   "alerted": [
+    "CAPR:pullback",
     "CAPR:short",
     "DAIC:ext",
     "NSSC:short",
+    "PMI:short",
     "XPON:short"
   ]
 }
