@@ -1,14 +1,4 @@
 {
-  "date": "2026-08-21",
-  "alerted": [
-    "ABUS:pullback",
-    "ABUS:short",
-    "ASST:short",
-    "BIVI:short",
-    "BRNX:short",
-    "JUNS:short",
-    "SBSW:short",
-    "SUGP:short",
-    "USDE:ext"
-  ]
+  "date": "2026-08-24",
+  "alerted": []
 }
