@@ -1,4 +1,7 @@
 {
   "date": "2026-08-25",
-  "alerted": []
+  "alerted": [
+    "DFNS:short",
+    "GRML:short"
+  ]
 }
