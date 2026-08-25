@@ -2,8 +2,10 @@
   "date": "2026-08-25",
   "alerted": [
     "AMIX:short",
+    "BTCT:short",
     "DAIC:short",
     "DFNS:short",
-    "GRML:short"
+    "GRML:short",
+    "JEM:short"
   ]
 }
