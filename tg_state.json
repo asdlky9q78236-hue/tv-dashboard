@@ -1,13 +1,4 @@
 {
-  "date": "2026-08-24",
-  "alerted": [
-    "CAPR:pullback",
-    "CAPR:short",
-    "DAIC:ext",
-    "NSSC:short",
-    "PMI:pullback",
-    "PMI:short",
-    "SDOT:short",
-    "XPON:short"
-  ]
+  "date": "2026-08-25",
+  "alerted": []
 }
