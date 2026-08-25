@@ -1,6 +1,8 @@
 {
   "date": "2026-08-25",
   "alerted": [
+    "AMIX:short",
+    "DAIC:short",
     "DFNS:short",
     "GRML:short"
   ]
