@@ -1,15 +1,4 @@
 {
-  "date": "2026-08-25",
-  "alerted": [
-    "AMIX:short",
-    "BRNX:pullback",
-    "BRNX:short",
-    "BTCT:pullback",
-    "BTCT:short",
-    "DAIC:short",
-    "DFNS:short",
-    "GRML:pullback",
-    "GRML:short",
-    "JEM:short"
-  ]
+  "date": "2026-08-26",
+  "alerted": []
 }
