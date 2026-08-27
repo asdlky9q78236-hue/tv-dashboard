@@ -3,6 +3,7 @@
   "alerted": [
     "BTCT:short",
     "MIMI:short",
+    "OKTA:ext",
     "OKTA:pullback",
     "PPCB:short",
     "VNCE:short",
