@@ -1,12 +1,4 @@
 {
-  "date": "2026-08-26",
-  "alerted": [
-    "CRE:pullback",
-    "CRE:short",
-    "DAIC:short",
-    "PLAB:short",
-    "SDOT:short",
-    "SMTK:short",
-    "XPON:short"
-  ]
+  "date": "2026-08-27",
+  "alerted": []
 }
