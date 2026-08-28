@@ -1,12 +1,4 @@
 {
-  "date": "2026-08-27",
-  "alerted": [
-    "BTCT:short",
-    "MIMI:short",
-    "OKTA:ext",
-    "OKTA:pullback",
-    "PPCB:short",
-    "VNCE:short",
-    "WNW:short"
-  ]
+  "date": "2026-08-28",
+  "alerted": []
 }
