@@ -6,6 +6,7 @@
     "ESTC:short",
     "GAP:short",
     "QNRX:short",
-    "SOLS:short"
+    "SOLS:short",
+    "XPON:short"
   ]
 }
