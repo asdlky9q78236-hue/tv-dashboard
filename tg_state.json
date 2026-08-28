@@ -1,4 +1,8 @@
 {
   "date": "2026-08-28",
-  "alerted": []
+  "alerted": [
+    "ESTC:pullback",
+    "GAP:short",
+    "QNRX:short"
+  ]
 }
