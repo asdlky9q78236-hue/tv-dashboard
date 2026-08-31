@@ -6,6 +6,7 @@
     "BRNX:short",
     "NCRA:short",
     "NEOV:pullback",
+    "NEOV:short",
     "WETO:ext"
   ]
 }
