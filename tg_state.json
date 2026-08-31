@@ -1,12 +1,4 @@
 {
-  "date": "2026-08-28",
-  "alerted": [
-    "AEMD:short",
-    "ESTC:pullback",
-    "ESTC:short",
-    "GAP:short",
-    "QNRX:short",
-    "SOLS:short",
-    "XPON:short"
-  ]
+  "date": "2026-08-31",
+  "alerted": []
 }
