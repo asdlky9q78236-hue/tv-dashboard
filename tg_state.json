@@ -4,6 +4,7 @@
     "BIAF:short",
     "CRK:short",
     "SSM:short",
+    "SST:pullback",
     "WETO:short"
   ]
 }
