@@ -1,15 +1,4 @@
 {
-  "date": "2026-08-31",
-  "alerted": [
-    "AEHL:pullback",
-    "AEHL:short",
-    "BRNX:pullback",
-    "BRNX:short",
-    "NCRA:short",
-    "NEOV:ext",
-    "NEOV:pullback",
-    "NEOV:short",
-    "WETO:ext",
-    "WETO:short"
-  ]
+  "date": "2026-09-01",
+  "alerted": []
 }
