@@ -1,9 +1,11 @@
 {
   "date": "2026-09-02",
   "alerted": [
+    "BIAF:pullback",
     "BIAF:short",
     "GTLB:short",
     "JLHL:short",
+    "PPBT:pullback",
     "PPBT:short",
     "SGLD:short",
     "UPC:short"
