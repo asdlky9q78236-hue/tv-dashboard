@@ -1,12 +1,4 @@
 {
-  "date": "2026-09-01",
-  "alerted": [
-    "BIAF:short",
-    "CRK:pullback",
-    "CRK:short",
-    "SSM:pullback",
-    "SSM:short",
-    "SST:pullback",
-    "WETO:short"
-  ]
+  "date": "2026-09-02",
+  "alerted": []
 }
