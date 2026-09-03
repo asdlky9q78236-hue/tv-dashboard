@@ -1,4 +1,11 @@
 {
   "date": "2026-09-03",
-  "alerted": []
+  "alerted": [
+    "AEHL:short",
+    "BIAF:short",
+    "CHPT:short",
+    "SNOW:short",
+    "TLYS:short",
+    "WOOF:short"
+  ]
 }
