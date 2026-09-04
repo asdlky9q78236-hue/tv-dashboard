@@ -1,13 +1,4 @@
 {
-  "date": "2026-09-03",
-  "alerted": [
-    "AEHL:short",
-    "BIAF:pullback",
-    "BIAF:short",
-    "CHPT:short",
-    "SNOW:pullback",
-    "SNOW:short",
-    "TLYS:short",
-    "WOOF:short"
-  ]
+  "date": "2026-09-04",
+  "alerted": []
 }
